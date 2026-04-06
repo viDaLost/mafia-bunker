@@ -2,452 +2,514 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Бункер</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Special Elite', monospace;
-      background: #000 url('images/bunker-background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
-      padding: 40px;
-      font-size: 18px;
-      margin: 0;
-      opacity: 0;
-      visibility: hidden;
-    }
-    body.loaded {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.5s ease-in-out;
-    }
-    img.icon {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    #preloader {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #000;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      z-index: 9999;
-      animation: fadeOut 1s ease forwards 2s;
-    }
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-    input[type="number"] {
-      font-size: 18px;
-      padding: 10px 20px;
-      border-radius: 25px;
-      border: none;
-      outline: none;
-      margin: 10px auto;
-      display: block;
-      width: 80%;
-      max-width: 300px;
-      background-color: rgba(34, 34, 34, 0.9);
-      color: white;
-      text-align: center;
-    }
-    button {
-      display: block;
-      margin: 15px auto;
-      background: transparent;
-      border: 1px solid white;
-      color: white;
-      font-size: 21px;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 10px 20px;
-      border-radius: 8px;
-    }
-    .card {
-      background: rgba(30, 30, 30, 0.9);
-      border: 1px solid #444;
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 20px;
-      text-align: left;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 16px;
-    }
-    .disaster-info,
-    .bunker-info {
-      font-size: 17px;
-      line-height: 1.6;
-      text-align: left;
-      max-width: 400px;
-      margin: 0 auto 20px auto;
-      background-color: rgba(204, 204, 204, 0.9);
-      color: black;
-      padding: 15px;
-      border-radius: 12px;
-    }
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .flip-card {
-      width: 100%;
-      height: 140px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    .flip-card.flipped .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-card-front,
-    .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-    }
-    .flip-card-front {
-      background-color: rgba(20, 20, 20, 0.9);
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .flip-card-back {
-      transform: rotateY(180deg);
-      background-color: rgba(30, 30, 30, 0.95);
-    }
-    .footer-buttons {
-      margin-top: 40px;
-      padding-bottom: 40px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .footer-buttons button {
-      width: 45%;
-      font-size: 21px;
-      font-weight: bold;
-    }
-    .overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .overlay.active {
-      display: flex;
-    }
-    .overlay-content {
-      background: #1e1e1e;
-      padding: 25px;
-      border-radius: 12px;
-      max-width: 400px;
-      width: 90%;
-      text-align: left;
-      animation: expandFromCard 0.3s ease forwards;
-      transform: scale(0.7);
-      opacity: 0;
-      color: white;
-    }
-    @keyframes expandFromCard {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    @keyframes collapseToCard {
-      from { transform: scale(1); opacity: 1; }
-      to { transform: scale(0.7); opacity: 0; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Бункер — помощник ведущего</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div id="preloader">Загрузка...</div>
-  <div id="setup" class="fade-in">
-    <h2>Игра Бункер</h2>
-    <p>Введите количество игроков (до 30)</p>
-    <input type="number" id="playerCount" min="2" max="30" value="5" />
-    <button onclick="startBunker()">Начать игру</button>
-  </div>
-    <div id="disasterInfo" style="display: none;">
-    <h2>Катастрофа произошла!</h2>
-    <div class="disaster-info" id="disasterText"></div>
-    <div class="bunker-info" id="bunkerText"></div>
-    <button onclick="showPlayerCard()">Показать карточку игрока</button>
-  </div>
+<body class="bunker-bg">
+  <main class="app-shell">
+    <div class="topbar">
+      <a class="brand" href="index.html">← Главное меню</a>
+      <div class="button-row">
+        <button class="ghost-btn" id="restoreBtn">Восстановить сессию</button>
+        <button class="danger-btn" id="resetBtn">Сбросить игру</button>
+      </div>
+    </div>
 
-  <div id="playerCardContainer" style="display: none;">
-    <h2 id="playerNumber">Игрок №1</h2>
-    <button onclick="showCurrentPlayerCard()">Показать карточку</button>
-  </div>
+    <section class="page-hero">
+      <h1>Бункер — не просто карточки, а полный раундовый помощник</h1>
+      <p>Приложение теперь генерирует уникальных персонажей, показывает катастрофу и параметры убежища, ведёт раунды, план выбывания, статусы игроков и журнал решений ведущего.</p>
+      <div class="tag-row">
+        <span class="tag">Катастрофа</span>
+        <span class="tag">Условия бункера</span>
+        <span class="tag">Уникальные карточки</span>
+        <span class="tag">Раунды выбывания</span>
+        <span class="tag">Контроль ведущего</span>
+      </div>
+    </section>
 
-  <div id="characterCard" class="card" style="display: none;"></div>
+    <section id="setupView" class="setup-grid">
+      <div class="setup-card">
+        <h2>Настройка игры</h2>
+        <div class="field-grid">
+          <div class="field">
+            <label for="playerCount">Игроков</label>
+            <input id="playerCount" type="number" min="4" max="30" value="10">
+          </div>
+          <div class="field">
+            <label for="roundsCount">Раундов обсуждения</label>
+            <input id="roundsCount" type="number" min="3" max="10" value="6">
+          </div>
+          <div class="field">
+            <label for="survivalPercent">Должно выжить, %</label>
+            <input id="survivalPercent" type="number" min="20" max="60" value="35">
+          </div>
+          <div class="field">
+            <label for="revealMode">Режим показа</label>
+            <select id="revealMode">
+              <option value="private">Приватно по игрокам</option>
+              <option value="moderator">Сразу панель ведущего</option>
+            </select>
+          </div>
+        </div>
+        <div class="button-row" style="margin-top:16px">
+          <button class="primary-btn" id="startBunkerBtn">Сгенерировать игру</button>
+        </div>
+        <p class="muted" id="bunkerHint" style="margin-top:12px">Лучше всего работает с 8–16 игроками и 5–7 раундами.</p>
+      </div>
 
-  <div id="allCardsShown" style="display: none;">
-    <h2>Все карточки показаны</h2>
-    <div id="playerList" class="card-grid"></div>
-  </div>
+      <div class="setup-card">
+        <h2>Краткая модель партии</h2>
+        <div class="summary-grid">
+          <div class="kpi"><div class="label">Игроков</div><div class="value" id="playersKpi">10</div><div class="hint">Общее число</div></div>
+          <div class="kpi"><div class="label">Выживут</div><div class="value" id="surviveKpi">4</div><div class="hint">Цель партии</div></div>
+          <div class="kpi"><div class="label">Выбyдут</div><div class="value" id="removeKpi">6</div><div class="hint">Всего за игру</div></div>
+          <div class="kpi"><div class="label">Раундов</div><div class="value" id="roundsKpi">6</div><div class="hint">Циклы обсуждения</div></div>
+        </div>
+        <div class="status-card" style="margin-top:16px">
+          <h3 style="margin-top:0">План выбывания</h3>
+          <div class="tag-row" id="removalPreview"></div>
+        </div>
+      </div>
+    </section>
 
-  <div class="footer-buttons">
-    <button onclick="goToMenu()">Главное меню</button>
-    <button onclick="restartGame()">В начало игры</button>
-  </div>
+    <section id="revealView" class="reveal-card hidden">
+      <div class="reveal-stage active" id="revealWaiting">
+        <div class="reveal-center">
+          <div class="status-badge warn">Приватная выдача карточек</div>
+          <h2 id="revealPlayerTitle">Игрок 1</h2>
+          <p class="reveal-desc">Передайте устройство игроку и покажите только его карточку. После просмотра скройте её и переходите к следующему участнику.</p>
+          <button class="primary-btn" id="showCharacterBtn">Показать карточку</button>
+        </div>
+      </div>
+      <div class="reveal-stage" id="revealCardStage">
+        <div id="characterRevealBody"></div>
+        <div class="button-row" style="justify-content:center; margin-top:16px">
+          <button class="ghost-btn" id="hideCharacterBtn">Скрыть и передать дальше</button>
+        </div>
+      </div>
+    </section>
 
-  <div class="overlay" id="overlay">
-    <div class="overlay-content" id="overlayContent"></div>
+    <section id="dashboardView" class="dashboard-grid hidden">
+      <div class="dashboard-card">
+        <h3>Сценарий катастрофы и бункер</h3>
+        <div class="modal-grid" id="scenarioGrid"></div>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Игровой контроль</h3>
+        <div class="summary-grid" style="margin-top:14px">
+          <div class="kpi"><div class="label">Раунд</div><div class="value" id="roundLabel">1</div><div class="hint">Текущий этап</div></div>
+          <div class="kpi"><div class="label">Живых</div><div class="value" id="aliveLabel">0</div><div class="hint">Остались в споре</div></div>
+          <div class="kpi"><div class="label">План</div><div class="value" id="roundPlanLabel">0</div><div class="hint">Выгнать в этом раунде</div></div>
+          <div class="kpi"><div class="label">Финал</div><div class="value" id="goalLabel">0</div><div class="hint">Должно выжить</div></div>
+        </div>
+        <div class="button-row" style="margin-top:16px">
+          <button class="primary-btn" id="nextRoundBtn">Следующий раунд</button>
+          <button class="ghost-btn" id="showAllBtn">Показать все карточки ведущему</button>
+          <button class="soft-btn" id="randomSpeakerBtn">Случайный выступающий</button>
+        </div>
+        <p class="muted" id="speakerResult" style="margin-top:12px">Нажмите кнопку, чтобы выбрать следующего выступающего среди живых игроков.</p>
+      </div>
+
+      <div class="dashboard-card" style="grid-column: 1 / -1;">
+        <div class="topbar" style="margin-bottom:14px">
+          <h3 style="margin:0">Игроки</h3>
+          <div class="button-row">
+            <span class="status-badge warn" id="survivalState">Игра продолжается</span>
+          </div>
+        </div>
+        <div class="players-grid" id="playersGrid"></div>
+      </div>
+
+      <div class="dashboard-card" style="grid-column: 1 / -1;">
+        <h3>Журнал игры</h3>
+        <div class="log-list" id="gameLog"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="playerModal">
+    <div class="modal-card">
+      <div class="topbar">
+        <h2 id="modalTitle" style="margin:0">Игрок</h2>
+        <button class="ghost-btn" id="closeModalBtn">Закрыть</button>
+      </div>
+      <div class="modal-grid" id="modalBody"></div>
+    </div>
   </div>
 
   <script>
-    let characters = [];
-    let currentCharacterIndex = 0;
+    const STORAGE_KEY = 'bunkerEnhancedStateV2';
+    let state = null;
+    let bunkerData = null;
+    const el = id => document.getElementById(id);
 
-    const usedValues = {
-      profession: [], health: [], phobia: [], skill: [],
-      inventory: [], quality: [], biography: [], secret: []
-    };
-
-    const iconMap = {
-      "Профессия": "profession.png",
-      "Здоровье": "health.png",
-      "Фобия": "phobia.png",
-      "Навык": "skill.png",
-      "Инвентарь": "inventory.png",
-      "Качество": "quality.png",
-      "Биография": "biography.png",
-      "Секрет": "secret.png"
-    };
-
-    function capitalizeFirstLetter(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function showPlayerCard() {
-      document.getElementById("disasterInfo").style.display = "none";
-      document.getElementById("playerNumber").innerText = `Игрок №1`;
-      document.getElementById("playerCardContainer").style.display = "block";
-    }
-
-    function showCurrentPlayerCard() {
-      const chars = JSON.parse(localStorage.getItem("bunkerCharacters"));
-      if (currentCharacterIndex >= chars.length) return;
-      const char = chars[currentCharacterIndex];
-      let html = `<h3>Карточка игрока ${currentCharacterIndex + 1}</h3>`;
-      for (const [label, key] of Object.entries({
-        "Профессия": "profession", "Здоровье": "health", "Фобия": "phobia",
-        "Навык": "skill", "Инвентарь": "inventory", "Качество": "quality",
-        "Биография": "biography", "Секрет": "secret"
-      })) {
-        const icon = iconMap[label];
-        html += `<p><img src="icons/${icon}" class="icon" alt="${label}"><strong>${label}:</strong> ${capitalizeFirstLetter(char[key])}</p><br/>`;
-      }
-      html += `<button onclick="nextPlayer()">Следующий игрок</button>`;
-      document.getElementById("characterCard").innerHTML = html;
-      document.getElementById("characterCard").style.display = "block";
-      document.getElementById("playerCardContainer").style.display = "none";
-    }
-
-    function nextPlayer() {
-      currentCharacterIndex++;
-      if (currentCharacterIndex < characters.length) {
-        document.getElementById("playerNumber").innerText = `Игрок №${currentCharacterIndex + 1}`;
-        document.getElementById("playerCardContainer").style.display = "block";
-        document.getElementById("characterCard").style.display = "none";
-      } else {
-        showAllPlayers();
-      }
-    }
-
-    function showAllPlayers() {
-      document.getElementById("characterCard").style.display = "none";
-      document.getElementById("playerCardContainer").style.display = "none";
-      document.getElementById("allCardsShown").style.display = "block";
-
-      const listDiv = document.getElementById("playerList");
-      listDiv.innerHTML = "";
-
-      characters.forEach((char, i) => {
-        const card = document.createElement("div");
-        card.className = "flip-card";
-        card.addEventListener("click", () => showPlayerOverlay(card, i));
-        card.innerHTML = `
-          <div class="flip-card-inner">
-            <div class="flip-card-front">Игрок ${i + 1}</div>
-            <div class="flip-card-back"></div>
-          </div>
-        `;
-        listDiv.appendChild(card);
-      });
-    }
-
-    function showPlayerOverlay(cardElement, index) {
-      cardElement.classList.add("flipped");
-
-      setTimeout(() => {
-        const char = characters[index];
-        const overlay = document.getElementById("overlay");
-        const content = document.getElementById("overlayContent");
-
-        content.innerHTML = `<h3>Игрок №${index + 1}</h3>`;
-        for (const [label, key] of Object.entries({
-          "Профессия": "profession", "Здоровье": "health", "Фобия": "phobia",
-          "Навык": "skill", "Инвентарь": "inventory", "Качество": "quality",
-          "Биография": "biography", "Секрет": "secret"
-        })) {
-          const icon = iconMap[label];
-          content.innerHTML += `<p><img src="icons/${icon}" class="icon" alt="${label}"><strong>${label}:</strong> ${capitalizeFirstLetter(char[key])}</p><br/>`;
-        }
-        content.innerHTML += `<button onclick="closePlayerOverlay(${index})">Закрыть</button>`;
-        overlay.classList.add("active");
-      }, 400);
-    }
-
-    function closePlayerOverlay(index) {
-      const overlay = document.getElementById("overlay");
-      const content = document.getElementById("overlayContent");
-      content.style.animation = "collapseToCard 0.3s ease";
-      setTimeout(() => {
-        overlay.classList.remove("active");
-        content.style.animation = "";
-        const cards = document.querySelectorAll(".flip-card");
-        if (cards[index]) {
-          cards[index].classList.remove("flipped");
-        }
-      }, 300);
-    }
-        function goToMenu() {
-      window.location.href = "index.html";
-    }
-
-    function restartGame() {
-      location.reload();
-    }
-
-    async function startBunker() {
+    async function loadData() {
+      if (bunkerData) return bunkerData;
       const [disasters, settings, fields, supplies] = await Promise.all([
-        fetch("data/disasters.json").then(r => r.json()),
-        fetch("data/bunker-settings.json").then(r => r.json()),
-        fetch("data/fields.json").then(r => r.json()),
-        fetch("data/supplies.json").then(r => r.json())
+        fetch('data/disasters.json').then(r => r.json()),
+        fetch('data/bunker-settings.json').then(r => r.json()),
+        fetch('data/fields.json').then(r => r.json()),
+        fetch('data/supplies.json').then(r => r.json())
       ]);
-
-      const total = parseInt(document.getElementById("playerCount").value);
-      characters = Array.from({length: total}, () => generateUniqueCharacter(fields));
-      localStorage.setItem("bunkerCharacters", JSON.stringify(characters));
-
-      document.getElementById("setup").style.display = "none";
-
-      const disaster = getRandom(disasters);
-      const setting = getRandom(settings);
-      const area = getRandom([
-        "Площадь бункера — 50 м², одноэтажный",
-        "Площадь бункера — 80 м², одноэтажный",
-        "Площадь бункера — 120 м², двухэтажный",
-        "Площадь бункера — 160 м², одноэтажный",
-        "Площадь бункера — 200 м², двухэтажный"
-      ]);
-      const randomSupplies = getRandomMultiple(supplies, 2, 4).join(', ');
-      const playersToStay = Math.ceil(total * 0.2);
-      const playersToRemove = total - playersToStay;
-      const removalPlan = calculateRemoval(playersToRemove, 6);
-
-      document.getElementById("disasterText").innerHTML = `<strong>Катастрофа:</strong> ${disaster.type} — ${disaster.description}`;
-      document.getElementById("bunkerText").innerHTML = `
-        <strong>Условия бункера:</strong><br/>
-        ${area}<br/>
-        Продолжительность: ${setting.duration}<br/>
-        Припасы: ${randomSupplies}<br/><br/>
-        <strong>Раунды:</strong><br/>
-        Игроков всего: ${total}<br/>
-        Остаться должны: ${playersToStay}<br/>
-        Исключено за игру: ${playersToRemove}<br/>
-        Исключения по раундам: ${removalPlan.join(', ')}
-      `;
-
-      document.getElementById("disasterInfo").style.display = "block";
+      bunkerData = { disasters, settings, fields, supplies };
+      return bunkerData;
     }
 
-    function generateUniqueCharacter(fields) {
-      function pick(fieldName, options) {
-        const available = options.filter(opt => !usedValues[fieldName].includes(opt));
-        const value = available.length > 0 ? getRandom(available) : getRandom(options);
-        usedValues[fieldName].push(value);
-        return value;
-      }
-      return {
-        profession: pick("profession", fields.professions),
-        health: pick("health", fields.health),
-        phobia: pick("phobia", fields.phobias),
-        skill: pick("skill", fields.skills),
-        inventory: pick("inventory", fields.inventory),
-        quality: pick("quality", fields.qualities),
-        biography: pick("biography", fields.biography),
-        secret: pick("secret", fields.secrets)
-      };
+    function clampNumber(value, min, max, fallback) {
+      const num = parseInt(value, 10);
+      if (Number.isNaN(num)) return fallback;
+      return Math.min(max, Math.max(min, num));
     }
 
-    function getRandom(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+    function getConfig() {
+      const players = clampNumber(el('playerCount').value, 4, 30, 10);
+      const rounds = clampNumber(el('roundsCount').value, 3, 10, 6);
+      const survivalPercent = clampNumber(el('survivalPercent').value, 20, 60, 35);
+      const survive = Math.max(1, Math.round(players * survivalPercent / 100));
+      const remove = Math.max(0, players - survive);
+      return { players, rounds, survivalPercent, survive, remove, revealMode: el('revealMode').value };
     }
 
-    function getRandomMultiple(arr, min, max) {
-      const count = Math.floor(Math.random() * (max - min + 1)) + min;
-      const result = [];
-      const used = new Set();
-      while (result.length < count && used.size < arr.length) {
-        const item = getRandom(arr);
-        if (!used.has(item)) {
-          result.push(item);
-          used.add(item);
-        }
-      }
-      return result;
-    }
-
-    function calculateRemoval(totalRemove, rounds) {
+    function computeRemovalPlan(remove, rounds) {
       const plan = new Array(rounds).fill(0);
-      let remaining = totalRemove;
-      for (let i = 0; i < rounds && remaining > 0; i++) {
-        const share = Math.ceil(remaining / (rounds - i));
-        plan[i] = share;
-        remaining -= share;
+      let remaining = remove;
+      for (let i = 0; i < rounds; i++) {
+        const roundsLeft = rounds - i;
+        const step = roundsLeft === 1 ? remaining : Math.ceil(remaining / roundsLeft);
+        plan[i] = Math.max(0, Math.min(step, remaining));
+        remaining -= plan[i];
       }
       return plan;
     }
 
-    window.addEventListener("load", () => {
-      document.querySelector("#preloader").classList.add("fadeOut");
-      setTimeout(() => {
-        document.querySelector("#preloader").remove();
-      }, 1000);
-      document.body.classList.add("loaded");
+    function updateSetupPreview() {
+      const cfg = getConfig();
+      const plan = computeRemovalPlan(cfg.remove, cfg.rounds);
+      el('playersKpi').textContent = cfg.players;
+      el('surviveKpi').textContent = cfg.survive;
+      el('removeKpi').textContent = cfg.remove;
+      el('roundsKpi').textContent = cfg.rounds;
+      el('removalPreview').innerHTML = plan.map((count, i) => `<span class="tag">Раунд ${i + 1}: -${count}</span>`).join('');
+      el('bunkerHint').textContent = cfg.remove === 0
+        ? 'С таким процентом никто не выбывает. Для классики уменьшите процент выживших.'
+        : `За игру должно выбыть ${cfg.remove} игроков.`;
+    }
+
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function randomUniqueMultiple(arr, min, max) {
+      const copy = [...arr];
+      const count = Math.min(copy.length, Math.floor(Math.random() * (max - min + 1)) + min);
+      const result = [];
+      for (let i = 0; i < count; i++) {
+        const idx = Math.floor(Math.random() * copy.length);
+        result.push(copy.splice(idx, 1)[0]);
+      }
+      return result;
+    }
+
+    function generateCharacters(fields, total) {
+      const used = {
+        professions: new Set(), health: new Set(), phobias: new Set(),
+        skills: new Set(), inventory: new Set(), qualities: new Set(),
+        biography: new Set(), secrets: new Set()
+      };
+
+      function pick(key) {
+        const pool = fields[key];
+        const available = pool.filter(item => !used[key].has(item));
+        const value = available.length ? randomFrom(available) : randomFrom(pool);
+        used[key].add(value);
+        return value;
+      }
+
+      return Array.from({ length: total }, (_, i) => ({
+        id: i + 1,
+        alive: true,
+        profession: pick('professions'),
+        health: pick('health'),
+        phobia: pick('phobias'),
+        skill: pick('skills'),
+        inventory: pick('inventory'),
+        quality: pick('qualities'),
+        biography: pick('biography'),
+        secret: pick('secrets'),
+        notes: []
+      }));
+    }
+
+    async function startBunker() {
+      const cfg = getConfig();
+      const data = await loadData();
+      const disaster = randomFrom(data.disasters);
+      const setting = randomFrom(data.settings);
+      const supplies = randomUniqueMultiple(data.supplies, 2, 4);
+      const area = randomFrom([
+        '56 м², один уровень, тесно, но безопасно',
+        '92 м², один уровень, комфортно для средней группы',
+        '128 м², два уровня, хороший запас пространства',
+        '168 м², два уровня, много отсеков и складов',
+        '220 м², модульный бункер с технической зоной'
+      ]);
+
+      state = {
+        round: 1,
+        revealIndex: 0,
+        showAllCards: cfg.revealMode === 'moderator',
+        config: cfg,
+        removalPlan: computeRemovalPlan(cfg.remove, cfg.rounds),
+        scenario: {
+          disaster,
+          setting,
+          area,
+          supplies,
+          specialRule: randomFrom([
+            'Воздух снаружи опасен ещё минимум 18 месяцев.',
+            'Первые 30 дней выходить наружу нельзя ни при каких условиях.',
+            'В бункере нестабильная фильтрация воды.',
+            'Энергии хватит только при строгой экономии.',
+            'Снаружи иногда слышны сигналы других выживших.'
+          ])
+        },
+        players: generateCharacters(data.fields, cfg.players),
+        log: [{ time: new Date().toLocaleString('ru-RU'), message: 'Игра «Бункер» сгенерирована.' }]
+      };
+      saveState();
+
+      if (cfg.revealMode === 'private') {
+        showReveal();
+      } else {
+        showDashboard();
+        makeLog('Карточки сразу открыты ведущему.');
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function clearState() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    function makeLog(message) {
+      state.log.unshift({ time: new Date().toLocaleString('ru-RU'), message });
+      saveState();
+      renderDashboard();
+    }
+
+    function showReveal() {
+      el('setupView').classList.add('hidden');
+      el('dashboardView').classList.add('hidden');
+      el('revealView').classList.remove('hidden');
+      renderReveal();
+    }
+
+    function renderReveal() {
+      const player = state.players[state.revealIndex];
+      if (!player) {
+        showDashboard();
+        makeLog('Все карточки розданы. Ведущий перешёл в режим управления игрой.');
+        return;
+      }
+      el('revealWaiting').classList.add('active');
+      el('revealCardStage').classList.remove('active');
+      el('revealPlayerTitle').textContent = `Игрок ${player.id}`;
+    }
+
+    function buildCharacterHtml(player) {
+      return `
+        <div class="reveal-center" style="align-items:stretch; text-align:left; min-height:auto;">
+          <div class="status-card">
+            <h2 style="margin-top:0">Карточка игрока ${player.id}</h2>
+            <div class="modal-grid">
+              <div class="kpi"><div class="label">Профессия</div><div>${player.profession}</div></div>
+              <div class="kpi"><div class="label">Здоровье</div><div>${player.health}</div></div>
+              <div class="kpi"><div class="label">Фобия</div><div>${player.phobia}</div></div>
+              <div class="kpi"><div class="label">Навык</div><div>${player.skill}</div></div>
+              <div class="kpi"><div class="label">Инвентарь</div><div>${player.inventory}</div></div>
+              <div class="kpi"><div class="label">Качество</div><div>${player.quality}</div></div>
+              <div class="kpi"><div class="label">Биография</div><div>${player.biography}</div></div>
+              <div class="kpi"><div class="label">Секрет</div><div>${player.secret}</div></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function showCharacter() {
+      const player = state.players[state.revealIndex];
+      if (!player) return;
+      el('characterRevealBody').innerHTML = buildCharacterHtml(player);
+      el('revealWaiting').classList.remove('active');
+      el('revealCardStage').classList.add('active');
+    }
+
+    function hideCharacterAndNext() {
+      state.revealIndex += 1;
+      saveState();
+      renderReveal();
+    }
+
+    function showDashboard() {
+      el('setupView').classList.add('hidden');
+      el('revealView').classList.add('hidden');
+      el('dashboardView').classList.remove('hidden');
+      renderDashboard();
+    }
+
+    function getRoundPlanCount() {
+      return state.removalPlan[Math.min(state.round - 1, state.removalPlan.length - 1)] || 0;
+    }
+
+    function renderDashboard() {
+      if (!state) return;
+      el('roundLabel').textContent = state.round;
+      el('aliveLabel').textContent = state.players.filter(p => p.alive).length;
+      el('roundPlanLabel').textContent = getRoundPlanCount();
+      el('goalLabel').textContent = state.config.survive;
+      el('survivalState').textContent = state.players.filter(p => p.alive).length <= state.config.survive ? 'Финал: достигнут лимит выживших' : 'Игра продолжается';
+      renderScenario();
+      renderPlayers();
+      renderLog();
+      saveState();
+    }
+
+    function renderScenario() {
+      const s = state.scenario;
+      el('scenarioGrid').innerHTML = `
+        <div class="kpi"><div class="label">Катастрофа</div><div class="value" style="font-size:24px">${s.disaster.type}</div><div class="hint">${s.disaster.description}</div></div>
+        <div class="kpi"><div class="label">Бункер</div><div class="value" style="font-size:24px">${s.area}</div><div class="hint">Срок: ${s.setting.duration}</div></div>
+        <div class="kpi"><div class="label">Ресурсы</div><div>${s.setting.resources}</div><div class="hint">Размер: ${s.setting.size}</div></div>
+        <div class="kpi"><div class="label">Припасы</div><div>${s.supplies.join(', ')}</div><div class="hint">Стартовый запас</div></div>
+        <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Особое правило</div><div>${s.specialRule}</div></div>
+      `;
+    }
+
+    function renderPlayers() {
+      const showAll = state.showAllCards;
+      el('playersGrid').innerHTML = state.players.map(player => `
+        <article class="player-card ${player.alive ? '' : 'dead'}">
+          <div class="title-row">
+            <div>
+              <h4>Игрок ${player.id}</h4>
+              <div class="muted">${showAll ? player.profession : 'Карточка скрыта'}</div>
+            </div>
+            <span class="status-badge ${player.alive ? 'good' : 'bad'}">${player.alive ? 'В игре' : 'Выбыл'}</span>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Навык: ${showAll ? player.skill : 'скрыт'}</span>
+            <span class="tag">Качество: ${showAll ? player.quality : 'скрыто'}</span>
+          </div>
+          <div class="button-row" style="margin-top:12px">
+            <button class="soft-btn" onclick="togglePlayer(${player.id})">${player.alive ? 'Исключить' : 'Вернуть'}</button>
+            <button class="ghost-btn" onclick="openPlayerModal(${player.id})">Подробнее</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderLog() {
+      el('gameLog').innerHTML = state.log.map(entry => `<div class="log-entry"><div class="time">${entry.time}</div><div>${entry.message}</div></div>`).join('');
+    }
+
+    function togglePlayer(id) {
+      const player = state.players.find(p => p.id === id);
+      if (!player) return;
+      player.alive = !player.alive;
+      player.notes.unshift(player.alive ? 'Возвращён в спор.' : `Исключён в раунде ${state.round}.`);
+      makeLog(`Игрок ${player.id} ${player.alive ? 'возвращён в игру' : 'исключён из бункера'}.`);
+      renderDashboard();
+    }
+
+    function nextRound() {
+      if (state.round < state.config.rounds) {
+        state.round += 1;
+        makeLog(`Начался раунд ${state.round}. План выбывания: ${getRoundPlanCount()} игроков.`);
+      } else {
+        makeLog('Основные раунды завершены. Осталось определить финальный состав выживших.');
+      }
+      renderDashboard();
+    }
+
+    function randomSpeaker() {
+      const alive = state.players.filter(p => p.alive);
+      if (!alive.length) {
+        el('speakerResult').textContent = 'Живых игроков не осталось.';
+        return;
+      }
+      const speaker = alive[Math.floor(Math.random() * alive.length)];
+      el('speakerResult').textContent = `Следующим выступает игрок ${speaker.id}${state.showAllCards ? ` — ${speaker.profession}` : ''}.`;
+      makeLog(`Случайным образом выбран выступающий: игрок ${speaker.id}.`);
+    }
+
+    function openPlayerModal(id) {
+      const p = state.players.find(player => player.id === id);
+      if (!p) return;
+      el('modalTitle').textContent = `Игрок ${p.id}`;
+      el('modalBody').innerHTML = `
+        <div class="kpi"><div class="label">Профессия</div><div>${p.profession}</div></div>
+        <div class="kpi"><div class="label">Здоровье</div><div>${p.health}</div></div>
+        <div class="kpi"><div class="label">Фобия</div><div>${p.phobia}</div></div>
+        <div class="kpi"><div class="label">Навык</div><div>${p.skill}</div></div>
+        <div class="kpi"><div class="label">Инвентарь</div><div>${p.inventory}</div></div>
+        <div class="kpi"><div class="label">Качество</div><div>${p.quality}</div></div>
+        <div class="kpi"><div class="label">Биография</div><div>${p.biography}</div></div>
+        <div class="kpi"><div class="label">Секрет</div><div>${p.secret}</div></div>
+        <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Заметки ведущего</div><div>${p.notes.length ? `<ul>${p.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : 'Пока без заметок.'}</div></div>
+      `;
+      el('playerModal').classList.add('active');
+    }
+
+    function closeModal() {
+      el('playerModal').classList.remove('active');
+    }
+
+    function restoreSession() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        alert('Сохранённая сессия не найдена.');
+        return;
+      }
+      state = JSON.parse(raw);
+      if (state.revealIndex < state.players.length && state.config.revealMode === 'private') showReveal();
+      else showDashboard();
+    }
+
+    function hardReset() {
+      if (!confirm('Полностью сбросить текущую игру?')) return;
+      state = null;
+      clearState();
+      location.reload();
+    }
+
+    ['playerCount', 'roundsCount', 'survivalPercent', 'revealMode'].forEach(id => {
+      el(id).addEventListener('input', updateSetupPreview);
+      el(id).addEventListener('change', updateSetupPreview);
     });
+    el('startBunkerBtn').addEventListener('click', startBunker);
+    el('showCharacterBtn').addEventListener('click', showCharacter);
+    el('hideCharacterBtn').addEventListener('click', hideCharacterAndNext);
+    el('nextRoundBtn').addEventListener('click', nextRound);
+    el('showAllBtn').addEventListener('click', () => {
+      state.showAllCards = !state.showAllCards;
+      makeLog(state.showAllCards ? 'Ведущий открыл все карточки.' : 'Ведущий снова скрыл карточки на общем экране.');
+      renderDashboard();
+    });
+    el('randomSpeakerBtn').addEventListener('click', randomSpeaker);
+    el('closeModalBtn').addEventListener('click', closeModal);
+    el('playerModal').addEventListener('click', (e) => { if (e.target === el('playerModal')) closeModal(); });
+    el('restoreBtn').addEventListener('click', restoreSession);
+    el('resetBtn').addEventListener('click', hardReset);
+
+    updateSetupPreview();
   </script>
 </body>
 </html>

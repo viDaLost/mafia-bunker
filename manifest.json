@@ -1,10 +1,10 @@
 {
-  "name": "Mafia Bunker",
-  "short_name": "Mafia",
+  "name": "Mafia & Bunker Master",
+  "short_name": "MB Master",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#08111b",
+  "theme_color": "#08111b",
   "icons": [
     {
       "src": "bunker.png",

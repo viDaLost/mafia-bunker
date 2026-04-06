@@ -2,91 +2,70 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Главная</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron  :wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мафия и Бункер</title>
   <link rel="manifest" href="./manifest.json">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('./background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      font-family: 'Orbitron', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      text-align: center;
-      backdrop-filter: brightness(0.9) blur(1px);
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-top: 40px;
-      margin-bottom: 60px;
-      text-shadow: 0 0 8px #000;
-    }
-
-    .game-container {
-      display: flex;
-      justify-content: center;
-      gap: 100px;
-      flex-wrap: wrap;
-      margin-top: 40px;
-    }
-
-    .game-icon {
-      width: 150px;
-      height: 150px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .game-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .mafia-icon {
-      background-image: url('./mafia.png');
-    }
-
-    .bunker-icon {
-      background-image: url('./bunker.png');
-    }
-
-    @media (max-width: 480px) {
-      .game-container {
-        gap: 40px;
-      }
-
-      .game-icon {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-bg">
+  <main class="app-shell">
+    <div class="topbar">
+      <div class="brand">GAME MASTER HUB</div>
+      <div class="button-row">
+        <a class="ghost-btn" href="mafia.html">Открыть «Мафию»</a>
+        <a class="ghost-btn" href="bunker.html">Открыть «Бункер»</a>
+      </div>
+    </div>
 
-  <h1>Выберите игру</h1>
+    <section class="page-hero">
+      <div class="hero-grid">
+        <div>
+          <h1>Две игры в одном приложении — теперь как полноценный помощник ведущего</h1>
+          <p>Быстрый запуск, красивый мобильный интерфейс, приватная раздача ролей и карточек, трекеры раундов, журнал действий и удобные панели для ведущего без лишней путаницы.</p>
+          <div class="tag-row">
+            <span class="tag">Приватная раздача</span>
+            <span class="tag">Логика раундов</span>
+            <span class="tag">Статусы игроков</span>
+            <span class="tag">Журнал игры</span>
+            <span class="tag">Адаптация под телефон</span>
+          </div>
+        </div>
+        <div class="setup-card">
+          <h2>Что улучшено</h2>
+          <div class="list-box">
+            <div class="list-item"><div class="index">1</div><div>Домашний экран стал чище и современнее</div><div class="status-badge good">UI</div></div>
+            <div class="list-item"><div class="index">2</div><div>В играх появились панели ведущего и игровой прогресс</div><div class="status-badge good">Logic</div></div>
+            <div class="list-item"><div class="index">3</div><div>Добавлены проверки ошибок, быстрые действия и локальное сохранение сессии</div><div class="status-badge good">UX</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="game-container">
-    <a href="mafia.html" class="game-icon mafia-icon" title="Мафия"></a>
-    <a href="bunker.html" class="game-icon bunker-icon" title="Бункер"></a>
-  </div>
+    <section class="home-grid">
+      <a class="game-tile" href="mafia.html" style="background-image:url('./mafia.png')">
+        <div class="game-tile-content">
+          <h3>Мафия</h3>
+          <p>Баланс ролей, приватная выдача, фазы день/ночь, отметка смертей и победы, журнал партии.</p>
+          <span class="primary-btn">Запустить игру</span>
+        </div>
+      </a>
+
+      <a class="game-tile" href="bunker.html" style="background-image:url('./bunker.png')">
+        <div class="game-tile-content">
+          <h3>Бункер</h3>
+          <p>Катастрофа, параметры убежища, уникальные персонажи, трекер раундов, выбывание и удобный обзор игроков.</p>
+          <span class="primary-btn">Запустить игру</span>
+        </div>
+      </a>
+    </section>
+  </main>
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(reg => console.log('Service Worker зарегистрирован'))
-        .catch(err => console.error('Ошибка регистрации Service Worker:', err));
+      navigator.serviceWorker.register('./service-worker.js').catch(console.error);
     }
   </script>
 </body>
