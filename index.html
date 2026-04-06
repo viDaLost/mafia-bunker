@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Мафия и Бункер</title>
-  <link rel="manifest" href="./manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,60 +12,66 @@
 <body class="home-bg">
   <main class="app-shell">
     <div class="topbar">
-      <div class="brand">GAME MASTER HUB</div>
+      <div class="brand">CARD DEALER</div>
       <div class="button-row">
-        <a class="ghost-btn" href="mafia.html">Открыть «Мафию»</a>
-        <a class="ghost-btn" href="bunker.html">Открыть «Бункер»</a>
+        <a class="ghost-btn" href="mafia.html">Мафия</a>
+        <a class="ghost-btn" href="bunker.html">Бункер</a>
       </div>
     </div>
 
     <section class="page-hero">
       <div class="hero-grid">
         <div>
-          <h1>Две игры в одном приложении — теперь как полноценный помощник ведущего</h1>
-          <p>Быстрый запуск, красивый мобильный интерфейс, приватная раздача ролей и карточек, трекеры раундов, журнал действий и удобные панели для ведущего без лишней путаницы.</p>
+          <div class="home-hero-note">Локальное приложение без серверной части</div>
+          <h1>Две атмосферные игры в одном приложении — только для красивой раздачи карт</h1>
+          <p>Здесь нет лишних блоков про улучшения и нет лишней игровой бюрократии. Вы выбираете игру, раздаёте роли или карточки по очереди и ведёте вечер в нужной атмосфере.</p>
           <div class="tag-row">
             <span class="tag">Приватная раздача</span>
-            <span class="tag">Логика раундов</span>
-            <span class="tag">Статусы игроков</span>
-            <span class="tag">Журнал игры</span>
-            <span class="tag">Адаптация под телефон</span>
+            <span class="tag">Локально в браузере</span>
+            <span class="tag">Атмосфера под жанр</span>
+            <span class="tag">Удобно на телефоне</span>
+          </div>
+          <div class="hero-actions button-row">
+            <a class="menu-btn mafia" href="mafia.html">🌙 Открыть «Мафию»</a>
+            <a class="menu-btn bunker" href="bunker.html">🛡️ Открыть «Бункер»</a>
           </div>
         </div>
-        <div class="setup-card">
-          <h2>Что улучшено</h2>
+        <div class="atmosphere-strip">
+          <h2>Как это работает</h2>
           <div class="list-box">
-            <div class="list-item"><div class="index">1</div><div>Домашний экран стал чище и современнее</div><div class="status-badge good">UI</div></div>
-            <div class="list-item"><div class="index">2</div><div>В играх появились панели ведущего и игровой прогресс</div><div class="status-badge good">Logic</div></div>
-            <div class="list-item"><div class="index">3</div><div>Добавлены проверки ошибок, быстрые действия и локальное сохранение сессии</div><div class="status-badge good">UX</div></div>
+            <div class="list-item"><div class="index">1</div><div>Выберите игру и укажите число игроков</div><div class="status-badge good">Старт</div></div>
+            <div class="list-item"><div class="index">2</div><div>Передавайте телефон по кругу и открывайте только личную карту игрока</div><div class="status-badge warn">Секретно</div></div>
+            <div class="list-item"><div class="index">3</div><div>После раздачи откройте общий экран ведущего со всеми картами</div><div class="status-badge good">Контроль</div></div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="home-grid">
-      <a class="game-tile" href="mafia.html" style="background-image:url('./mafia.png')">
+      <a class="game-tile mafia-tile" href="mafia.html" style="background-image:url('./mafia.png')">
         <div class="game-tile-content">
+          <div class="tile-features">
+            <span class="tag">ночная атмосфера</span>
+            <span class="tag">тайные роли</span>
+          </div>
           <h3>Мафия</h3>
-          <p>Баланс ролей, приватная выдача, фазы день/ночь, отметка смертей и победы, журнал партии.</p>
-          <span class="primary-btn">Запустить игру</span>
+          <p>Темный стол, скрытые роли и быстрая приватная раздача без лишних фаз и перегруженных панелей.</p>
+          <span class="menu-btn mafia">Раздать роли</span>
         </div>
       </a>
 
-      <a class="game-tile" href="bunker.html" style="background-image:url('./bunker.png')">
+      <a class="game-tile bunker-tile" href="bunker.html" style="background-image:url('./bunker.png')">
         <div class="game-tile-content">
+          <div class="tile-features">
+            <span class="tag">постапокалипсис</span>
+            <span class="tag">карточки выживания</span>
+          </div>
           <h3>Бункер</h3>
-          <p>Катастрофа, параметры убежища, уникальные персонажи, трекер раундов, выбывание и удобный обзор игроков.</p>
-          <span class="primary-btn">Запустить игру</span>
+          <p>Катастрофа, убежище и личные характеристики персонажей — всё в стиле настольной раздачи карт.</p>
+          <span class="menu-btn bunker">Раздать карточки</span>
         </div>
       </a>
     </section>
   </main>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').catch(console.error);
-    }
-  </script>
 </body>
 </html>

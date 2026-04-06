@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Мафия — помощник ведущего</title>
+  <title>Мафия — раздача ролей</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,32 +14,32 @@
     <div class="topbar">
       <a class="brand" href="index.html">← Главное меню</a>
       <div class="button-row">
-        <button class="ghost-btn" id="restoreBtn">Восстановить сессию</button>
-        <button class="danger-btn" id="resetBtn">Сбросить игру</button>
+        <button class="ghost-btn" id="restoreBtn">Вернуть последнюю раздачу</button>
+        <button class="danger-btn" id="resetBtn">Сбросить</button>
       </div>
     </div>
 
     <section class="page-hero">
-      <h1>Мафия — ведущий контролирует всю партию</h1>
-      <p>Теперь это не просто раздача ролей. Здесь есть проверка баланса, приватная выдача, ночные и дневные циклы, список живых игроков, отметки действий и автоматическая проверка победы.</p>
+      <h1>Мафия — только атмосфера, тайна и раздача ролей</h1>
+      <p>Эта версия сделана именно под карточную раздачу: настроили состав, передали телефон каждому игроку, а после открыли общий экран ведущего со всеми ролями.</p>
       <div class="tag-row">
-        <span class="tag">Приватная роль</span>
-        <span class="tag">Фазы игры</span>
-        <span class="tag">Победа по условиям</span>
-        <span class="tag">Локальное сохранение</span>
+        <span class="tag">Тайные роли</span>
+        <span class="tag">Приватный показ</span>
+        <span class="tag">Ночной стиль</span>
+        <span class="tag">Без серверной части</span>
       </div>
     </section>
 
     <section id="setupView" class="setup-grid">
       <div class="setup-card">
-        <h2>Настройка партии</h2>
+        <h2>Настройка раздачи</h2>
         <div class="field-grid">
           <div class="field">
             <label for="totalPlayers">Всего игроков</label>
             <input id="totalPlayers" type="number" min="5" max="30" value="10">
           </div>
           <div class="field">
-            <label for="preset">Быстрый шаблон</label>
+            <label for="preset">Шаблон</label>
             <select id="preset">
               <option value="custom">Своя настройка</option>
               <option value="classic">Классика</option>
@@ -65,35 +65,19 @@
           </div>
         </div>
         <div class="button-row" style="margin-top:16px">
-          <button class="primary-btn" id="startGameBtn">Начать партию</button>
+          <button class="primary-btn" id="startGameBtn">Начать раздачу</button>
           <button class="ghost-btn" id="autoBalanceBtn">Автобаланс</button>
         </div>
         <p class="muted" id="validationText" style="margin-top:12px">Подберите состав ролей или используйте автобаланс.</p>
       </div>
 
       <div class="setup-card">
-        <h2>Подсказка по балансу</h2>
+        <h2>Сводка состава</h2>
         <div class="summary-grid">
-          <div class="kpi">
-            <div class="label">Игроков</div>
-            <div class="value" id="kpiPlayers">10</div>
-            <div class="hint">Общее число</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Опасных ролей</div>
-            <div class="value" id="kpiHostile">3</div>
-            <div class="hint">Мафия + маньяк</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Мирных ролей</div>
-            <div class="value" id="kpiCivil">7</div>
-            <div class="hint">Остальные игроки</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Оценка</div>
-            <div class="value" id="kpiBalance">OK</div>
-            <div class="hint">Баланс партии</div>
-          </div>
+          <div class="kpi"><div class="label">Игроков</div><div class="value" id="kpiPlayers">10</div><div class="hint">Всего за столом</div></div>
+          <div class="kpi"><div class="label">Тёмные роли</div><div class="value" id="kpiHostile">3</div><div class="hint">Мафия + маньяк</div></div>
+          <div class="kpi"><div class="label">Город</div><div class="value" id="kpiCivil">7</div><div class="hint">Остальные игроки</div></div>
+          <div class="kpi"><div class="label">Оценка</div><div class="value" id="kpiBalance">OK</div><div class="hint">Баланс раздачи</div></div>
         </div>
         <div class="list-box" id="rolePreview" style="margin-top:16px"></div>
       </div>
@@ -102,9 +86,9 @@
     <section id="revealView" class="reveal-card hidden">
       <div class="reveal-stage active" id="revealWaiting">
         <div class="reveal-center">
-          <div class="status-badge warn">Приватный режим</div>
+          <div class="status-badge warn">Секретная роль</div>
           <h2 id="revealPlayerTitle">Игрок 1</h2>
-          <p class="reveal-desc">Передайте телефон игроку. Нажмите кнопку, чтобы показать только его роль, затем сразу скрыть и передать следующему.</p>
+          <p class="reveal-desc">Передайте телефон игроку. Нажмите кнопку, чтобы открыть только его карту, затем скройте её и переходите к следующему человеку.</p>
           <div class="button-row" style="justify-content:center; margin-top:16px">
             <button class="primary-btn" id="showRoleBtn">Показать роль</button>
           </div>
@@ -124,68 +108,24 @@
 
     <section id="dashboardView" class="dashboard-grid hidden">
       <div class="dashboard-card">
-        <h3>Панель ведущего</h3>
-        <div class="summary-grid" style="margin-top:14px">
-          <div class="kpi"><div class="label">Раунд</div><div class="value" id="roundLabel">1</div><div class="hint">Текущий круг</div></div>
-          <div class="kpi"><div class="label">Фаза</div><div class="value" id="phaseLabel">Ночь</div><div class="hint">День / ночь</div></div>
-          <div class="kpi"><div class="label">Живых</div><div class="value" id="aliveLabel">0</div><div class="hint">Активные игроки</div></div>
-          <div class="kpi"><div class="label">Статус</div><div class="value" id="winState">Идёт игра</div><div class="hint">Победа или продолжение</div></div>
+        <div class="topbar" style="margin-bottom:14px">
+          <h3 style="margin:0">Карты ведущего</h3>
+          <div class="button-row">
+            <button class="ghost-btn" id="showAllRolesBtn">Показать роли</button>
+          </div>
         </div>
-
-        <div class="control-grid" style="margin-top:16px">
-          <div class="status-card">
-            <h3 style="margin-top:0">Управление фазой</h3>
-            <p class="muted">Переключайте день и ночь, ведите игру по раундам.</p>
-            <div class="button-row">
-              <button class="primary-btn" id="togglePhaseBtn">Переключить фазу</button>
-              <button class="ghost-btn" id="nextRoundBtn">Следующий раунд</button>
-            </div>
-          </div>
-          <div class="status-card">
-            <h3 style="margin-top:0">Быстрые действия</h3>
-            <div class="field-grid">
-              <div class="field">
-                <label for="actionPlayer">Игрок</label>
-                <select id="actionPlayer"></select>
-              </div>
-              <div class="field">
-                <label for="actionType">Событие</label>
-                <select id="actionType">
-                  <option value="eliminated">Выбит / убит</option>
-                  <option value="restored">Вернуть в игру</option>
-                  <option value="healed">Доктор спас</option>
-                  <option value="checked">Комиссар проверил</option>
-                  <option value="suspect">Подозреваемый дня</option>
-                </select>
-              </div>
-            </div>
-            <button class="soft-btn" id="applyActionBtn">Применить действие</button>
-          </div>
+        <div class="summary-grid">
+          <div class="kpi"><div class="label">Всего игроков</div><div class="value" id="dashPlayers">0</div><div class="hint">Все карты</div></div>
+          <div class="kpi"><div class="label">Мафия</div><div class="value" id="dashMafia">0</div><div class="hint">Тёмная сторона</div></div>
+          <div class="kpi"><div class="label">Город</div><div class="value" id="dashCity">0</div><div class="hint">Мирные роли</div></div>
+          <div class="kpi"><div class="label">Маньяк</div><div class="value" id="dashSolo">0</div><div class="hint">Одиночка</div></div>
         </div>
       </div>
 
       <div class="dashboard-card">
-        <h3>Сводка ролей</h3>
-        <div class="list-box" id="teamsSummary"></div>
-        <div class="status-card" style="margin-top:16px">
-          <h3 style="margin-top:0">Подсказка ведущему</h3>
-          <p class="muted" id="mafiaTip">Ночью удобно отмечать убийства и сохранения, днём — голосование и выбывание.</p>
-        </div>
-      </div>
-
-      <div class="dashboard-card" style="grid-column: 1 / -1;">
-        <div class="topbar" style="margin-bottom:14px">
-          <h3 style="margin:0">Игроки</h3>
-          <div class="button-row">
-            <button class="ghost-btn" id="showAllRolesBtn">Показать роли ведущему</button>
-          </div>
-        </div>
+        <h3>Игроки</h3>
+        <p class="muted">На общем экране роли по умолчанию скрыты. Откройте их только для ведущего, когда раздача закончится.</p>
         <div class="players-grid" id="playersGrid"></div>
-      </div>
-
-      <div class="dashboard-card" style="grid-column: 1 / -1;">
-        <h3>Журнал партии</h3>
-        <div class="log-list" id="gameLog"></div>
       </div>
     </section>
   </main>
@@ -201,17 +141,16 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'mafiaEnhancedStateV2';
+    const STORAGE_KEY = 'mafiaCardDealerStateV3';
     const roleMeta = {
       'мафия': { team: 'Тьма', desc: 'Ночью устраняет игроков и старается перехватить контроль над городом.' },
       'комиссар': { team: 'Город', desc: 'Проверяет игроков и помогает вычислить мафию.' },
       'доктор': { team: 'Город', desc: 'Может спасти выбранного игрока ночью.' },
-      'маньяк': { team: 'Одиночка', desc: 'Играет сам за себя и устраняет всех подряд.' },
-      'мирный житель': { team: 'Город', desc: 'Ищет мафию днём и голосует против подозреваемых.' }
+      'маньяк': { team: 'Одиночка', desc: 'Играет сам за себя и опасен для всех.' },
+      'мирный житель': { team: 'Город', desc: 'Ищет мафию днём и влияет на голосование.' }
     };
 
     let state = null;
-
     const el = id => document.getElementById(id);
 
     function shuffle(arr) {
@@ -226,53 +165,26 @@
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
-
     function clearState() {
       localStorage.removeItem(STORAGE_KEY);
     }
-
-    function makeLog(message) {
-      if (!state) return;
-      state.log.unshift({ time: new Date().toLocaleString('ru-RU'), message });
-      saveState();
-      renderDashboard();
+    function capitalize(value) {
+      return value.charAt(0).toUpperCase() + value.slice(1);
     }
 
     function applyPreset() {
       const total = clampNumber(el('totalPlayers').value, 5, 30, 10);
       const preset = el('preset').value;
-      if (preset === 'custom') return;
-      let mafia = Math.max(1, Math.floor(total / 4));
-      let sheriff = total >= 7 ? 1 : 0;
-      let doctor = total >= 8 ? 1 : 0;
-      let maniac = 0;
-      if (preset === 'party') {
-        mafia = Math.max(2, Math.floor(total / 3.7));
-        doctor = total >= 9 ? 1 : 0;
-        sheriff = total >= 8 ? 1 : 0;
-        maniac = total >= 10 ? 1 : 0;
-      }
-      if (preset === 'tense') {
-        mafia = Math.max(2, Math.floor(total / 4));
-        sheriff = 1;
-        doctor = 1;
-        maniac = total >= 11 ? 1 : 0;
-      }
-      if (preset === 'classic') {
-        mafia = Math.max(1, Math.floor(total / 4));
-        sheriff = 1;
-        doctor = total >= 8 ? 1 : 0;
-      }
-      el('mafiaCount').value = mafia;
-      el('sheriffCount').value = sheriff;
-      el('doctorCount').value = doctor;
-      el('maniacCount').value = maniac;
-      updateSetupMetrics();
-    }
-
-    function autoBalance() {
-      el('preset').value = 'classic';
-      applyPreset();
+      let config;
+      if (preset === 'classic') config = { mafia: Math.max(2, Math.round(total / 4)), sheriff: 1, doctor: 1, maniac: 0 };
+      else if (preset === 'party') config = { mafia: Math.max(2, Math.round(total / 3.8)), sheriff: 1, doctor: 1, maniac: 1 };
+      else if (preset === 'tense') config = { mafia: Math.max(2, Math.round(total / 3.2)), sheriff: 1, doctor: 0, maniac: 1 };
+      else return;
+      el('mafiaCount').value = config.mafia;
+      el('sheriffCount').value = config.sheriff;
+      el('doctorCount').value = config.doctor;
+      el('maniacCount').value = config.maniac;
+      updateSetupPreview();
     }
 
     function clampNumber(value, min, max, fallback) {
@@ -281,94 +193,84 @@
       return Math.min(max, Math.max(min, num));
     }
 
-    function getConfig() {
+    function getSetupState() {
       const total = clampNumber(el('totalPlayers').value, 5, 30, 10);
-      const mafiaCount = clampNumber(el('mafiaCount').value, 1, 10, 2);
-      const sheriffCount = clampNumber(el('sheriffCount').value, 0, 3, 1);
-      const doctorCount = clampNumber(el('doctorCount').value, 0, 3, 1);
-      const maniacCount = clampNumber(el('maniacCount').value, 0, 2, 1);
-      return { total, mafiaCount, sheriffCount, doctorCount, maniacCount };
+      const mafia = clampNumber(el('mafiaCount').value, 1, 10, 2);
+      const sheriff = clampNumber(el('sheriffCount').value, 0, 3, 1);
+      const doctor = clampNumber(el('doctorCount').value, 0, 3, 1);
+      const maniac = clampNumber(el('maniacCount').value, 0, 2, 1);
+      return { total, mafia, sheriff, doctor, maniac };
     }
 
-    function validateConfig() {
-      const { total, mafiaCount, sheriffCount, doctorCount, maniacCount } = getConfig();
-      const special = mafiaCount + sheriffCount + doctorCount + maniacCount;
-      const hostile = mafiaCount + maniacCount;
-      let ok = true;
-      let text = 'Состав выглядит играбельно.';
-      let balance = 'OK';
-      if (special > total) {
-        ok = false;
-        text = 'Ролей больше, чем игроков. Уменьшите специальные роли.';
-        balance = 'ERR';
-      } else if (hostile < 1) {
-        ok = false;
-        text = 'Нужна хотя бы одна опасная роль.';
-        balance = 'ERR';
-      } else if (hostile >= Math.ceil(total / 2)) {
-        text = 'Состав очень жёсткий: опасных ролей почти половина.';
-        balance = 'HARD';
-      } else if (hostile <= 1 && total >= 10) {
-        text = 'Партия может быть слишком мягкой для большого состава.';
-        balance = 'EASY';
-      }
-      return { ok, text, balance, special, hostile, peaceful: total - hostile };
+    function validateSetup(config) {
+      const special = config.mafia + config.sheriff + config.doctor + config.maniac;
+      const civilians = config.total - special;
+      if (civilians < 1) return { ok: false, text: 'Нужен хотя бы один мирный житель.' };
+      if (config.mafia >= civilians + config.sheriff + config.doctor) return { ok: false, text: 'Слишком много тёмных ролей для такой компании.' };
+      if (config.mafia < 1) return { ok: false, text: 'Нужна хотя бы одна роль мафии.' };
+      const threat = config.mafia + config.maniac;
+      if (threat > Math.ceil(config.total / 2)) return { ok: false, text: 'Раздача выйдет слишком жёсткой. Уменьшите опасные роли.' };
+      const balance = threat <= Math.ceil(config.total / 3) ? 'Сбалансировано' : 'Осторожно: партия будет напряжённой';
+      return { ok: true, text: balance };
     }
 
-    function updateSetupMetrics() {
-      const cfg = getConfig();
-      const validation = validateConfig();
-      el('kpiPlayers').textContent = cfg.total;
-      el('kpiHostile').textContent = validation.hostile;
-      el('kpiCivil').textContent = validation.peaceful;
-      el('kpiBalance').textContent = validation.balance;
+    function updateSetupPreview() {
+      const config = getSetupState();
+      const civilians = config.total - (config.mafia + config.sheriff + config.doctor + config.maniac);
+      const validation = validateSetup(config);
+      el('kpiPlayers').textContent = config.total;
+      el('kpiHostile').textContent = config.mafia + config.maniac;
+      el('kpiCivil').textContent = civilians;
+      el('kpiBalance').textContent = validation.ok ? 'OK' : 'ERR';
       el('validationText').textContent = validation.text;
-
-      const preview = [];
-      for (let i = 0; i < cfg.mafiaCount; i++) preview.push('мафия');
-      for (let i = 0; i < cfg.sheriffCount; i++) preview.push('комиссар');
-      for (let i = 0; i < cfg.doctorCount; i++) preview.push('доктор');
-      for (let i = 0; i < cfg.maniacCount; i++) preview.push('маньяк');
-      while (preview.length < cfg.total) preview.push('мирный житель');
-      el('rolePreview').innerHTML = preview.map((role, idx) => {
+      const roles = [
+        ...Array.from({ length: config.mafia }, () => 'мафия'),
+        ...Array.from({ length: config.sheriff }, () => 'комиссар'),
+        ...Array.from({ length: config.doctor }, () => 'доктор'),
+        ...Array.from({ length: config.maniac }, () => 'маньяк'),
+        ...Array.from({ length: civilians }, () => 'мирный житель')
+      ];
+      el('rolePreview').innerHTML = roles.map((role, idx) => {
         const meta = roleMeta[role];
-        return `<div class="list-item"><div class="index">${idx + 1}</div><div><strong>${capitalize(role)}</strong><div class="muted">${meta.team}</div></div><div class="status-badge ${meta.team === 'Город' ? 'good' : meta.team === 'Одиночка' ? 'warn' : 'bad'}">${meta.team}</div></div>`;
+        const badge = meta.team === 'Город' ? 'good' : meta.team === 'Одиночка' ? 'warn' : 'bad';
+        return `<div class="list-item"><div class="index">${idx + 1}</div><div><strong>${capitalize(role)}</strong><div class="muted">${meta.team}</div></div><div class="status-badge ${badge}">${meta.team}</div></div>`;
       }).join('');
     }
 
-    function buildPlayers() {
-      const cfg = getConfig();
-      const roles = [];
-      for (let i = 0; i < cfg.mafiaCount; i++) roles.push('мафия');
-      for (let i = 0; i < cfg.sheriffCount; i++) roles.push('комиссар');
-      for (let i = 0; i < cfg.doctorCount; i++) roles.push('доктор');
-      for (let i = 0; i < cfg.maniacCount; i++) roles.push('маньяк');
-      while (roles.length < cfg.total) roles.push('мирный житель');
-
-      return shuffle(roles).map((role, index) => ({
-        id: index + 1,
-        role,
-        team: roleMeta[role].team,
-        desc: roleMeta[role].desc,
-        alive: true,
-        notes: []
-      }));
+    function autoBalance() {
+      const total = clampNumber(el('totalPlayers').value, 5, 30, 10);
+      el('mafiaCount').value = Math.max(2, Math.round(total / 4));
+      el('sheriffCount').value = 1;
+      el('doctorCount').value = total >= 7 ? 1 : 0;
+      el('maniacCount').value = total >= 9 ? 1 : 0;
+      updateSetupPreview();
     }
 
     function startGame() {
-      const validation = validateConfig();
+      const config = getSetupState();
+      const validation = validateSetup(config);
       if (!validation.ok) {
         alert(validation.text);
         return;
       }
+      const civilians = config.total - (config.mafia + config.sheriff + config.doctor + config.maniac);
+      const roles = shuffle([
+        ...Array.from({ length: config.mafia }, () => 'мафия'),
+        ...Array.from({ length: config.sheriff }, () => 'комиссар'),
+        ...Array.from({ length: config.doctor }, () => 'доктор'),
+        ...Array.from({ length: config.maniac }, () => 'маньяк'),
+        ...Array.from({ length: civilians }, () => 'мирный житель')
+      ]);
       state = {
-        round: 1,
-        phase: 'Ночь',
+        config,
         revealIndex: 0,
-        revealed: false,
-        showRolesToHost: false,
-        players: buildPlayers(),
-        log: [{ time: new Date().toLocaleString('ru-RU'), message: 'Партия создана. Началась приватная раздача ролей.' }]
+        showAllRoles: false,
+        players: roles.map((role, index) => ({
+          id: index + 1,
+          role,
+          team: roleMeta[role].team,
+          desc: roleMeta[role].desc
+        }))
       };
       saveState();
       showReveal();
@@ -384,10 +286,7 @@
     function renderReveal() {
       const player = state.players[state.revealIndex];
       if (!player) {
-        el('revealView').classList.add('hidden');
-        el('dashboardView').classList.remove('hidden');
-        makeLog('Все роли розданы. Ведущий перешёл в режим управления партией.');
-        renderDashboard();
+        showDashboard();
         return;
       }
       el('revealWaiting').classList.add('active');
@@ -395,16 +294,15 @@
       el('revealPlayerTitle').textContent = `Игрок ${player.id}`;
     }
 
-    function showCurrentRole() {
+    function showRole() {
       const player = state.players[state.revealIndex];
       if (!player) return;
-      const meta = roleMeta[player.role];
+      el('teamBadge').textContent = player.team;
+      el('teamBadge').className = `status-badge ${player.team === 'Город' ? 'good' : player.team === 'Одиночка' ? 'warn' : 'bad'}`;
+      el('revealRoleName').textContent = capitalize(player.role);
+      el('revealRoleDesc').textContent = player.desc;
       el('revealWaiting').classList.remove('active');
       el('revealRoleStage').classList.add('active');
-      el('teamBadge').textContent = meta.team;
-      el('teamBadge').className = `status-badge ${meta.team === 'Город' ? 'good' : meta.team === 'Одиночка' ? 'warn' : 'bad'}`;
-      el('revealRoleName').textContent = capitalize(player.role);
-      el('revealRoleDesc').textContent = meta.desc;
     }
 
     function hideRoleAndNext() {
@@ -413,137 +311,50 @@
       renderReveal();
     }
 
-    function evaluateWin() {
-      const alive = state.players.filter(p => p.alive);
-      const mafiaAlive = alive.filter(p => p.role === 'мафия').length;
-      const maniacsAlive = alive.filter(p => p.role === 'маньяк').length;
-      const cityAlive = alive.filter(p => p.team === 'Город').length;
-
-      if (maniacsAlive === 1 && alive.length === 1) return 'Победа маньяка';
-      if (mafiaAlive === 0 && maniacsAlive === 0) return 'Победа города';
-      if (mafiaAlive > 0 && mafiaAlive >= cityAlive - mafiaAlive) return 'Победа мафии';
-      return 'Идёт игра';
+    function showDashboard() {
+      el('setupView').classList.add('hidden');
+      el('revealView').classList.add('hidden');
+      el('dashboardView').classList.remove('hidden');
+      renderDashboard();
     }
 
     function renderDashboard() {
       if (!state) return;
-      el('roundLabel').textContent = state.round;
-      el('phaseLabel').textContent = state.phase;
-      el('aliveLabel').textContent = state.players.filter(p => p.alive).length;
-      el('winState').textContent = evaluateWin();
-      el('mafiaTip').textContent = state.phase === 'Ночь'
-        ? 'Ночью отмечайте убийства, спасения и проверки. После этого переходите в день.'
-        : 'Днём удобно фиксировать подозреваемых, голосование и выбывших игроков.';
-
-      renderTeamsSummary();
-      renderPlayerOptions();
-      renderPlayersGrid();
-      renderLog();
+      const mafiaCount = state.players.filter(p => p.role === 'мафия').length;
+      const cityCount = state.players.filter(p => p.team === 'Город').length;
+      const soloCount = state.players.filter(p => p.team === 'Одиночка').length;
+      el('dashPlayers').textContent = state.players.length;
+      el('dashMafia').textContent = mafiaCount;
+      el('dashCity').textContent = cityCount;
+      el('dashSolo').textContent = soloCount;
+      el('showAllRolesBtn').textContent = state.showAllRoles ? 'Скрыть роли' : 'Показать роли';
+      el('playersGrid').innerHTML = state.players.map(player => `
+        <article class="player-card ${state.showAllRoles ? '' : 'dead'}">
+          <div class="title-row">
+            <div>
+              <h4>Игрок ${player.id}</h4>
+              <div class="muted">${state.showAllRoles ? capitalize(player.role) : 'Роль скрыта'}</div>
+            </div>
+            <span class="status-badge ${player.team === 'Город' ? 'good' : player.team === 'Одиночка' ? 'warn' : 'bad'}">${state.showAllRoles ? player.team : 'Секрет'}</span>
+          </div>
+          <div class="tag-row">
+            <span class="tag">${state.showAllRoles ? player.desc : 'Откройте роли, чтобы увидеть описание'}</span>
+          </div>
+          <div class="button-row" style="margin-top:12px">
+            <button class="soft-btn" onclick="openPlayerModal(${player.id})">Подробнее</button>
+          </div>
+        </article>
+      `).join('');
       saveState();
     }
 
-    function renderTeamsSummary() {
-      const alive = state.players.filter(p => p.alive);
-      const rows = [
-        { label: 'Мирные и городские', count: alive.filter(p => p.team === 'Город').length, cls: 'good' },
-        { label: 'Мафия', count: alive.filter(p => p.role === 'мафия').length, cls: 'bad' },
-        { label: 'Маньяк', count: alive.filter(p => p.role === 'маньяк').length, cls: 'warn' },
-        { label: 'Выбывшие', count: state.players.filter(p => !p.alive).length, cls: 'bad' }
-      ];
-      el('teamsSummary').innerHTML = rows.map((row, idx) => `
-        <div class="list-item">
-          <div class="index">${idx + 1}</div>
-          <div><strong>${row.label}</strong></div>
-          <div class="status-badge ${row.cls}">${row.count}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderPlayerOptions() {
-      el('actionPlayer').innerHTML = state.players.map(p => `<option value="${p.id}">Игрок ${p.id} — ${capitalize(p.role)}</option>`).join('');
-    }
-
-    function renderPlayersGrid() {
-      el('playersGrid').innerHTML = state.players.map(player => {
-        const showRole = state.showRolesToHost;
-        return `
-          <article class="player-card ${player.alive ? '' : 'dead'}">
-            <div class="title-row">
-              <div>
-                <h4>Игрок ${player.id}</h4>
-                <div class="muted">${showRole ? capitalize(player.role) : 'Роль скрыта'}</div>
-              </div>
-              <span class="status-badge ${player.alive ? 'good' : 'bad'}">${player.alive ? 'Жив' : 'Выбыл'}</span>
-            </div>
-            <div class="tag-row">
-              <span class="tag">Команда: ${showRole ? player.team : 'скрыта'}</span>
-              <span class="tag">Заметок: ${player.notes.length}</span>
-            </div>
-            <div class="button-row" style="margin-top:12px">
-              <button class="soft-btn" onclick="toggleLife(${player.id})">${player.alive ? 'Выбить' : 'Вернуть'}</button>
-              <button class="ghost-btn" onclick="openPlayerModal(${player.id})">Подробнее</button>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
-
-    function renderLog() {
-      const log = state.log.length
-        ? state.log.map(entry => `<div class="log-entry"><div class="time">${entry.time}</div><div>${entry.message}</div></div>`).join('')
-        : '<div class="center-note">Журнал пока пуст.</div>';
-      el('gameLog').innerHTML = log;
-    }
-
-    function toggleLife(playerId) {
-      const player = state.players.find(p => p.id === playerId);
-      if (!player) return;
-      player.alive = !player.alive;
-      player.notes.unshift(player.alive ? 'Возвращён в игру' : `Выбыл в фазу: ${state.phase}`);
-      makeLog(`Игрок ${player.id} ${player.alive ? 'возвращён в игру' : 'выбыл из партии'}.`);
-      renderDashboard();
-    }
-
-    function applyQuickAction() {
-      const playerId = parseInt(el('actionPlayer').value, 10);
-      const action = el('actionType').value;
-      const player = state.players.find(p => p.id === playerId);
-      if (!player) return;
-      const messages = {
-        eliminated: `Игрок ${player.id} выбыл из игры.`,
-        restored: `Игрок ${player.id} возвращён в игру.`,
-        healed: `Доктор спас игрока ${player.id}.`,
-        checked: `Комиссар проверил игрока ${player.id}.`,
-        suspect: `Игрок ${player.id} стал главным подозреваемым дня.`
-      };
-      if (action === 'eliminated') player.alive = false;
-      if (action === 'restored') player.alive = true;
-      player.notes.unshift(messages[action]);
-      makeLog(messages[action]);
-      renderDashboard();
-    }
-
-    function nextRound() {
-      state.round += 1;
-      makeLog(`Начался раунд ${state.round}.`);
-      renderDashboard();
-    }
-
-    function togglePhase() {
-      state.phase = state.phase === 'Ночь' ? 'День' : 'Ночь';
-      makeLog(`Фаза переключена: ${state.phase}.`);
-      renderDashboard();
-    }
-
-    function openPlayerModal(playerId) {
-      const player = state.players.find(p => p.id === playerId);
+    function openPlayerModal(id) {
+      const player = state.players.find(p => p.id === id);
       if (!player) return;
       el('modalTitle').textContent = `Игрок ${player.id}`;
       el('modalBody').innerHTML = `
         <div class="kpi"><div class="label">Роль</div><div class="value">${capitalize(player.role)}</div><div class="hint">${player.team}</div></div>
-        <div class="kpi"><div class="label">Статус</div><div class="value">${player.alive ? 'Жив' : 'Выбыл'}</div><div class="hint">Текущая партия</div></div>
-        <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Описание</div><div>${player.desc}</div></div>
-        <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Заметки</div><div>${player.notes.length ? `<ul>${player.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : 'Пока без заметок.'}</div></div>
+        <div class="kpi"><div class="label">Описание</div><div>${player.desc}</div></div>
       `;
       el('playerModal').classList.add('active');
     }
@@ -552,48 +363,35 @@
       el('playerModal').classList.remove('active');
     }
 
-    function capitalize(value) {
-      return value.charAt(0).toUpperCase() + value.slice(1);
-    }
-
     function restoreSession() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
-        alert('Сохранённая сессия не найдена.');
+        alert('Сохранённая раздача не найдена.');
         return;
       }
       state = JSON.parse(raw);
-      if (state.revealIndex < state.players.length) {
-        showReveal();
-      } else {
-        el('setupView').classList.add('hidden');
-        el('revealView').classList.add('hidden');
-        el('dashboardView').classList.remove('hidden');
-        renderDashboard();
-      }
+      if (state.revealIndex < state.players.length) showReveal();
+      else showDashboard();
     }
 
     function hardReset() {
-      if (!confirm('Полностью сбросить текущую партию?')) return;
+      if (!confirm('Полностью сбросить текущую раздачу?')) return;
       state = null;
       clearState();
       location.reload();
     }
 
-    el('preset').addEventListener('change', applyPreset);
     ['totalPlayers', 'mafiaCount', 'sheriffCount', 'doctorCount', 'maniacCount'].forEach(id => {
-      el(id).addEventListener('input', updateSetupMetrics);
+      el(id).addEventListener('input', updateSetupPreview);
+      el(id).addEventListener('change', updateSetupPreview);
     });
-    el('autoBalanceBtn').addEventListener('click', autoBalance);
+    el('preset').addEventListener('change', applyPreset);
     el('startGameBtn').addEventListener('click', startGame);
-    el('showRoleBtn').addEventListener('click', showCurrentRole);
+    el('autoBalanceBtn').addEventListener('click', autoBalance);
+    el('showRoleBtn').addEventListener('click', showRole);
     el('hideRoleBtn').addEventListener('click', hideRoleAndNext);
-    el('togglePhaseBtn').addEventListener('click', togglePhase);
-    el('nextRoundBtn').addEventListener('click', nextRound);
-    el('applyActionBtn').addEventListener('click', applyQuickAction);
     el('showAllRolesBtn').addEventListener('click', () => {
-      state.showRolesToHost = !state.showRolesToHost;
-      makeLog(state.showRolesToHost ? 'Ведущий открыл полный просмотр ролей.' : 'Ведущий снова скрыл роли на панели.');
+      state.showAllRoles = !state.showAllRoles;
       renderDashboard();
     });
     el('closeModalBtn').addEventListener('click', closeModal);
@@ -601,7 +399,7 @@
     el('restoreBtn').addEventListener('click', restoreSession);
     el('resetBtn').addEventListener('click', hardReset);
 
-    updateSetupMetrics();
+    updateSetupPreview();
   </script>
 </body>
 </html>

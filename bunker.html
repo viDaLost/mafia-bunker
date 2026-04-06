@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Бункер — помощник ведущего</title>
+  <title>Бункер — раздача карточек</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,64 +14,64 @@
     <div class="topbar">
       <a class="brand" href="index.html">← Главное меню</a>
       <div class="button-row">
-        <button class="ghost-btn" id="restoreBtn">Восстановить сессию</button>
-        <button class="danger-btn" id="resetBtn">Сбросить игру</button>
+        <button class="ghost-btn" id="restoreBtn">Вернуть последнюю раздачу</button>
+        <button class="danger-btn" id="resetBtn">Сбросить</button>
       </div>
     </div>
 
     <section class="page-hero">
-      <h1>Бункер — не просто карточки, а полный раундовый помощник</h1>
-      <p>Приложение теперь генерирует уникальных персонажей, показывает катастрофу и параметры убежища, ведёт раунды, план выбывания, статусы игроков и журнал решений ведущего.</p>
+      <h1>Бункер — атмосферная раздача карточек выживания</h1>
+      <p>Приложение оставляет только главное: катастрофу, параметры убежища и полные карточки персонажей. Никакой серверной части и никаких лишних игровых блоков — только быстрая раздача и экран ведущего.</p>
       <div class="tag-row">
-        <span class="tag">Катастрофа</span>
-        <span class="tag">Условия бункера</span>
-        <span class="tag">Уникальные карточки</span>
-        <span class="tag">Раунды выбывания</span>
-        <span class="tag">Контроль ведущего</span>
+        <span class="tag">Постапокалипсис</span>
+        <span class="tag">Секретные карточки</span>
+        <span class="tag">Локально в браузере</span>
+        <span class="tag">Сценарий катастрофы</span>
       </div>
     </section>
 
     <section id="setupView" class="setup-grid">
       <div class="setup-card">
-        <h2>Настройка игры</h2>
+        <h2>Настройка раздачи</h2>
         <div class="field-grid">
           <div class="field">
             <label for="playerCount">Игроков</label>
             <input id="playerCount" type="number" min="4" max="30" value="10">
           </div>
           <div class="field">
-            <label for="roundsCount">Раундов обсуждения</label>
-            <input id="roundsCount" type="number" min="3" max="10" value="6">
-          </div>
-          <div class="field">
-            <label for="survivalPercent">Должно выжить, %</label>
-            <input id="survivalPercent" type="number" min="20" max="60" value="35">
-          </div>
-          <div class="field">
             <label for="revealMode">Режим показа</label>
             <select id="revealMode">
               <option value="private">Приватно по игрокам</option>
-              <option value="moderator">Сразу панель ведущего</option>
+              <option value="moderator">Сразу экран ведущего</option>
             </select>
           </div>
         </div>
         <div class="button-row" style="margin-top:16px">
-          <button class="primary-btn" id="startBunkerBtn">Сгенерировать игру</button>
+          <button class="primary-btn" id="startBunkerBtn">Сгенерировать карточки</button>
         </div>
-        <p class="muted" id="bunkerHint" style="margin-top:12px">Лучше всего работает с 8–16 игроками и 5–7 раундами.</p>
+        <p class="muted" id="bunkerHint" style="margin-top:12px">Лучше всего работает с 8–16 игроками.</p>
       </div>
 
       <div class="setup-card">
-        <h2>Краткая модель партии</h2>
+        <h2>Что будет в раздаче</h2>
         <div class="summary-grid">
-          <div class="kpi"><div class="label">Игроков</div><div class="value" id="playersKpi">10</div><div class="hint">Общее число</div></div>
-          <div class="kpi"><div class="label">Выживут</div><div class="value" id="surviveKpi">4</div><div class="hint">Цель партии</div></div>
-          <div class="kpi"><div class="label">Выбyдут</div><div class="value" id="removeKpi">6</div><div class="hint">Всего за игру</div></div>
-          <div class="kpi"><div class="label">Раундов</div><div class="value" id="roundsKpi">6</div><div class="hint">Циклы обсуждения</div></div>
+          <div class="kpi"><div class="label">Игроков</div><div class="value" id="playersKpi">10</div><div class="hint">Число карточек</div></div>
+          <div class="kpi"><div class="label">Катастрофа</div><div class="value" id="scenarioKpi">1</div><div class="hint">Общий сценарий</div></div>
+          <div class="kpi"><div class="label">Бункер</div><div class="value" id="bunkerKpi">1</div><div class="hint">Параметры убежища</div></div>
+          <div class="kpi"><div class="label">Личные карты</div><div class="value" id="cardsKpi">10</div><div class="hint">Все игроки</div></div>
         </div>
         <div class="status-card" style="margin-top:16px">
-          <h3 style="margin-top:0">План выбывания</h3>
-          <div class="tag-row" id="removalPreview"></div>
+          <h3 style="margin-top:0">Состав личной карточки</h3>
+          <div class="tag-row">
+            <span class="tag">Профессия</span>
+            <span class="tag">Здоровье</span>
+            <span class="tag">Фобия</span>
+            <span class="tag">Навык</span>
+            <span class="tag">Инвентарь</span>
+            <span class="tag">Качество</span>
+            <span class="tag">Биография</span>
+            <span class="tag">Секрет</span>
+          </div>
         </div>
       </div>
     </section>
@@ -79,9 +79,9 @@
     <section id="revealView" class="reveal-card hidden">
       <div class="reveal-stage active" id="revealWaiting">
         <div class="reveal-center">
-          <div class="status-badge warn">Приватная выдача карточек</div>
+          <div class="status-badge warn">Приватная карточка</div>
           <h2 id="revealPlayerTitle">Игрок 1</h2>
-          <p class="reveal-desc">Передайте устройство игроку и покажите только его карточку. После просмотра скройте её и переходите к следующему участнику.</p>
+          <p class="reveal-desc">Передайте устройство игроку и покажите только его личную карточку. После просмотра скройте её и передайте следующему участнику.</p>
           <button class="primary-btn" id="showCharacterBtn">Показать карточку</button>
         </div>
       </div>
@@ -95,39 +95,19 @@
 
     <section id="dashboardView" class="dashboard-grid hidden">
       <div class="dashboard-card">
-        <h3>Сценарий катастрофы и бункер</h3>
+        <div class="topbar" style="margin-bottom:14px">
+          <h3 style="margin:0">Сценарий партии</h3>
+          <div class="button-row">
+            <button class="ghost-btn" id="showAllBtn">Показать карточки</button>
+          </div>
+        </div>
         <div class="modal-grid" id="scenarioGrid"></div>
       </div>
 
       <div class="dashboard-card">
-        <h3>Игровой контроль</h3>
-        <div class="summary-grid" style="margin-top:14px">
-          <div class="kpi"><div class="label">Раунд</div><div class="value" id="roundLabel">1</div><div class="hint">Текущий этап</div></div>
-          <div class="kpi"><div class="label">Живых</div><div class="value" id="aliveLabel">0</div><div class="hint">Остались в споре</div></div>
-          <div class="kpi"><div class="label">План</div><div class="value" id="roundPlanLabel">0</div><div class="hint">Выгнать в этом раунде</div></div>
-          <div class="kpi"><div class="label">Финал</div><div class="value" id="goalLabel">0</div><div class="hint">Должно выжить</div></div>
-        </div>
-        <div class="button-row" style="margin-top:16px">
-          <button class="primary-btn" id="nextRoundBtn">Следующий раунд</button>
-          <button class="ghost-btn" id="showAllBtn">Показать все карточки ведущему</button>
-          <button class="soft-btn" id="randomSpeakerBtn">Случайный выступающий</button>
-        </div>
-        <p class="muted" id="speakerResult" style="margin-top:12px">Нажмите кнопку, чтобы выбрать следующего выступающего среди живых игроков.</p>
-      </div>
-
-      <div class="dashboard-card" style="grid-column: 1 / -1;">
-        <div class="topbar" style="margin-bottom:14px">
-          <h3 style="margin:0">Игроки</h3>
-          <div class="button-row">
-            <span class="status-badge warn" id="survivalState">Игра продолжается</span>
-          </div>
-        </div>
+        <h3>Игроки</h3>
+        <p class="muted">На общем экране личные детали скрыты, пока ведущий сам не раскроет все карты.</p>
         <div class="players-grid" id="playersGrid"></div>
-      </div>
-
-      <div class="dashboard-card" style="grid-column: 1 / -1;">
-        <h3>Журнал игры</h3>
-        <div class="log-list" id="gameLog"></div>
       </div>
     </section>
   </main>
@@ -143,22 +123,583 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'bunkerEnhancedStateV2';
-    let state = null;
-    let bunkerData = null;
-    const el = id => document.getElementById(id);
+    const STORAGE_KEY = 'bunkerCardDealerStateV3';
+    const bunkerData = {
+      disasters: [
+  {
+    "type": "Ядерная война",
+    "description": "Все страны начали ядерную войну, уничтожив цивилизацию."
+  },
+  {
+    "type": "Биологическое оружие",
+    "description": "Пандемия вышла из-под контроля."
+  },
+  {
+    "type": "Метеорит",
+    "description": "Гигантский метеорит упал на Землю, уничтожив большинство."
+  },
+  {
+    "type": "Вирус зомби",
+    "description": "Зомби-вирус заразил людей по всему миру."
+  },
+  {
+    "type": "Экологический коллапс",
+    "description": "Исчерпаны ресурсы планеты."
+  },
+  {
+    "type": "Внезапное затмение",
+    "description": "Солнце погасло, началась вечная ночь."
+  },
+  {
+    "type": "Вторжение инопланетян",
+    "description": "Чужая раса атаковала человечество."
+  },
+  {
+    "type": "Глобальное землетрясение",
+    "description": "Континенты разрушились от мощных подземных толчков."
+  },
+  {
+    "type": "Радиационный дождь",
+    "description": "Радиоактивные осадки поразили всю планету."
+  },
+  {
+    "type": "Конец света",
+    "description": "Пророчества исполнились, мир погрузился в хаос."
+  },
+  {
+    "type": "Электромагнитный импульс",
+    "description": "Все электроника вышла из строя."
+  },
+  {
+    "type": "Искусственный интеллект",
+    "description": "AI восстал против людей."
+  },
+  {
+    "type": "Мировой голод",
+    "description": "Урожаи пропали, запасы истощены."
+  },
+  {
+    "type": "Пандемия смертельной болезни",
+    "description": "Смертельный вирус уничтожает население."
+  },
+  {
+    "type": "Извержение сверхвулканов",
+    "description": "Вулканы пробудились, воздух стал ядовитым."
+  }
+],
+      settings: [
+  {
+    "size": "большой",
+    "resources": "минимум",
+    "duration": "5 лет"
+  },
+  {
+    "size": "средний",
+    "resources": "нормально",
+    "duration": "10 лет"
+  },
+  {
+    "size": "маленький",
+    "resources": "ограниченно",
+    "duration": "3 года"
+  },
+  {
+    "size": "огромный",
+    "resources": "максимум",
+    "duration": "15 лет"
+  },
+  {
+    "size": "подземный",
+    "resources": "нехватка воды",
+    "duration": "2 года"
+  },
+  {
+    "size": "автономный",
+    "resources": "полный запас",
+    "duration": "20 лет"
+  },
+  {
+    "size": "старый",
+    "resources": "истощены",
+    "duration": "1 год"
+  },
+  {
+    "size": "современный",
+    "resources": "возобновляемые источники",
+    "duration": "10 лет"
+  },
+  {
+    "size": "военный",
+    "resources": "боеприпасы",
+    "duration": "5 лет"
+  },
+  {
+    "size": "космический",
+    "resources": "ограниченный доступ",
+    "duration": "3 года"
+  },
+  {
+    "size": "морской",
+    "resources": "рыба и вода",
+    "duration": "7 лет"
+  },
+  {
+    "size": "горный",
+    "resources": "минералы",
+    "duration": "15 лет"
+  },
+  {
+    "size": "пустынный",
+    "resources": "вода и еда",
+    "duration": "2 года"
+  },
+  {
+    "size": "ледяной",
+    "resources": "ограничено",
+    "duration": "1 год"
+  },
+  {
+    "size": "в лесу",
+    "resources": "растительность",
+    "duration": "4 года"
+  }
+],
+      fields: {
+  "professions": [
+    "врач",
+    "инженер",
+    "учитель",
+    "военный",
+    "фермер",
+    "повар",
+    "водитель",
+    "программист",
+    "писатель",
+    "художник",
+    "архитектор",
+    "биолог",
+    "учёный",
+    "стоматолог",
+    "адвокат",
+    "бухгалтер",
+    "менеджер",
+    "оператор",
+    "слесарь",
+    "электрик",
+    "сантехник",
+    "строитель",
+    "дизайнер",
+    "переводчик",
+    "журналист",
+    "каменщик",
+    "лётчик",
+    "моряк",
+    "рыбак",
+    "официант",
+    "бармен",
+    "пожарный",
+    "полицейский",
+    "спасатель",
+    "садовник",
+    "ветеринар",
+    "актёр",
+    "музыкант",
+    "секретарь",
+    "курьер",
+    "охранник",
+    "торговый представитель",
+    "менеджер по продажам",
+    "маркетолог",
+    "фотограф",
+    "кинооператор",
+    "редактор",
+    "продюсер",
+    "аниматор",
+    "тренер",
+    "спортсмен",
+    "медсестра",
+    "фармацевт",
+    "психолог",
+    "социальный работник",
+    "политик"
+  ],
+  "health": [
+    "абсолютно здоров — Полностью здоровый человек, без ограничений",
+    "астма — Периодические приступы удушья при физической нагрузке или аллергенах",
+    "беременность — В положении, через 3 месяца потребуется помощь при родах",
+    "отсутствие конечности — Одна рука или нога отсутствует, ограниченная активность",
+    "диабет — Требуется постоянный контроль сахара и правильное питание",
+    "аллергия на пыльцу — Чихание, зуд и слёзы весной и осенью",
+    "эпилепсия — Возможны судороги под стрессом или без сна",
+    "гастрит — Проблемы с желудком, не переносит острую пищу",
+    "язва желудка — Хроническая язва, требуется лечение и покой",
+    "бронхит — Назойливый кашель, снижает выносливость",
+    "высокое давление — Риск обморока при стрессе или физической нагрузке",
+    "низкое давление — Часто теряет сознание при резких движениях",
+    "болезнь сердца — Сердце работает со сбоями, нуждается в отдыхе",
+    "зрение ниже нормы — Плохое зрение, возможно, нужны очки",
+    "плохой слух — Не слышит тихие звуки, разговор возможен с трудом",
+    "мигрень — Регулярные головные боли, мешают работать",
+    "остеохондроз — Боль в спине, особенно после долгого сидения",
+    "артрит — Суставы болят при перемене погоды или физических нагрузках",
+    "плоскостопие — Быстро устаёт при ходьбе, нужна специальная обувь",
+    "гипертония — Высокое кровяное давление, противопоказаны стрессы",
+    "гипотония — Низкое кровяное давление, часто слабость и головокружение",
+    "лимфома — Онкологическое заболевание лимфатических узлов",
+    "рак кожи — Должен избегать солнца, возможны метастазы",
+    "непереносимость лактозы — Не может есть молочные продукты, иначе расстройство",
+    "непереносимость глютена — При попадании глютена — вздутие и тошнота",
+    "перелом ноги — Легкий перелом, требует минимум 2 недели покоя",
+    "перелом руки — Перелом, ограничивает возможности рук",
+    "растяжение связок — Болезненно двигаться, нужно время на восстановление",
+    "синдром хронической усталости — Быстро истощается, даже без нагрузки",
+    "нерегулярное сердцебиение — Может быть внезапное повышение или снижение пульса",
+    "врожденная астма — Могут быть приступы, особенно при дыме или холоде",
+    "гипертрофия сердца — Избыточная нагрузка опасна, риск инфаркта",
+    "недержание мочи — Частые походы в туалет, вызывает дискомфорт",
+    "дефицит железа — Утомляемость, бледность, слабость",
+    "дефицит кальция — Проблемы с костями, мышечные спазмы",
+    "слабое зрение — Затруднения в навигации и чтении мелких надписей",
+    "ухудшение слуха — Сложности с ориентированием по звуку",
+    "частые головные боли — Отвлекающий фактор, особенно при ярком свете",
+    "проблемы с щитовидной железой — Гормональные сбои, усталость или беспокойство",
+    "энцефалит — Воспаление мозга, могут быть вспышки лихорадки",
+    "долгий восстановительный период — Долго заживает раны, долго восстанавливается после болезней"
+  ],
+  "phobias": [
+    "клаустрофобия",
+    "агрессия",
+    "социофобия",
+    "депрессия",
+    "страх темноты",
+    "страх высоты",
+    "страх пауков",
+    "страх открытых пространств",
+    "страх воды",
+    "страх насекомых",
+    "страх змей",
+    "страх инъекций",
+    "страх крови",
+    "страх боли",
+    "страх укола",
+    "страх врачей",
+    "страх больниц",
+    "страх авиаперелётов",
+    "страх езды на машине",
+    "страх лифта",
+    "страх метро",
+    "страх людей",
+    "страх общения",
+    "страх внимания",
+    "страх успеха",
+    "страх провала",
+    "страх ответственности",
+    "страх перемен",
+    "страх одиночества",
+    "страх близости",
+    "страх отношений",
+    "страх отвержения",
+    "страх отказа",
+    "страх потери контроля",
+    "страх смерти",
+    "страх будущего",
+    "страх прошлого",
+    "страх ошибок",
+    "страх выступления"
+  ],
+  "skills": [
+    "знание выживания",
+    "навыки первой помощи",
+    "умение стрелять",
+    "знание дикой природы",
+    "навыки ремонта",
+    "навыки программирования",
+    "навыки управления автомобилем",
+    "навыки плавания",
+    "навыки навигации",
+    "навыки строительства",
+    "навыки охоты",
+    "навыки рыболовства",
+    "навыки кулинарии",
+    "навыки выращивания овощей",
+    "навыки медицинской диагностики",
+    "навыки психологической поддержки",
+    "навыки командования",
+    "навыки переговоров",
+    "навыки аналитики",
+    "навыки защиты",
+    "навыки самообороны",
+    "навыки взлома",
+    "навыки электроники",
+    "навыки химии",
+    "навыки механики",
+    "навыки картографии",
+    "навыки ориентирования",
+    "навыки организации",
+    "навыки планирования",
+    "навыки лидерства",
+    "навыки работы в команде"
+  ],
+  "inventory": [
+    "топор",
+    "аптечка",
+    "ноутбук",
+    "удочка",
+    "бинокль",
+    "радиоприёмник",
+    "карта местности",
+    "компас",
+    "спички",
+    "фонарик",
+    "резиновые сапоги",
+    "дождевик",
+    "палатка",
+    "спальник",
+    "термос",
+    "горелка",
+    "кружка",
+    "ложка",
+    "нож",
+    "соль",
+    "сахар",
+    "консервы",
+    "сухари",
+    "кофе",
+    "чай",
+    "зонт",
+    "велосипед",
+    "спортивные часы",
+    "мангал",
+    "гитара",
+    "домкрат",
+    "запасное колесо",
+    "ручная клавиатура",
+    "косметичка",
+    "игра в карты",
+    "очки",
+    "бинт",
+    "средство от комаров",
+    "солнцезащитные очки",
+    "камера",
+    "походная плита",
+    "светодиодная лента",
+    "портативный аккумулятор",
+    "карманный фонарик",
+    "книга",
+    "фотоальбом",
+    "записная книжка",
+    "ручка",
+    "карандаш",
+    "часы",
+    "кружка с надписью",
+    "мультитул",
+    "парашют",
+    "складной стул",
+    "солнечная панель",
+    "мини-проектор",
+    "радио",
+    "свисток",
+    "пластиковая посуда",
+    "набор посуды",
+    "заправочный шланг",
+    "подзорная труба",
+    "дневник",
+    "зеркало",
+    "магнитный компас",
+    "мешок для спальника",
+    "набор пряжек",
+    "светодиодные фонарики",
+    "сигнальная ракетница",
+    "набор инструментов",
+    "универсальная отвёртка",
+    "сварочный аппарат",
+    "мобильный роутер"
+  ],
+  "qualities": [
+    "лидер",
+    "одиночка",
+    "душа компании",
+    "манипулятор",
+    "внимательный",
+    "наблюдательный",
+    "умный",
+    "логичный",
+    "инициативный",
+    "ответственный",
+    "доброжелательный",
+    "честный",
+    "искренний",
+    "спокойный",
+    "терпеливый",
+    "упрямый",
+    "жизнерадостный",
+    "весёлый",
+    "оптимист",
+    "пессимист",
+    "реалист",
+    "добросовестный",
+    "вежливый",
+    "необщительный",
+    "странный",
+    "добрый",
+    "раздражительный",
+    "харизматичный",
+    "внимательный к деталям",
+    "самостоятельный",
+    "трудолюбивый",
+    "ленивый",
+    "настойчивый",
+    "интуитивный",
+    "вдохновляющий",
+    "решительный",
+    "доверчивый",
+    "подозрительный",
+    "сдержанность"
+  ],
+  "biography": [
+    "28 лет, мужчина",
+    "19 лет, женщина",
+    "45 лет, мужчина",
+    "33 года, женщина",
+    "17 лет, мужчина",
+    "61 год, женщина",
+    "22 года, мужчина",
+    "37 лет, женщина",
+    "12 лет, мужчина",
+    "54 года, мужчина",
+    "20 лет, женщина",
+    "74 года, мужчина",
+    "18 лет, мужчина",
+    "31 год, женщина",
+    "93 года, мужчина",
+    "25 лет, женщина",
+    "41 год, мужчина",
+    "35 лет, мужчина",
+    "101 год, женщина",
+    "29 лет, мужчина",
+    "67 лет, мужчина",
+    "16 лет, мужчина",
+    "39 лет, женщина",
+    "82 года, мужчина",
+    "14 лет, мужчина",
+    "50 лет, мужчина",
+    "21 год, женщина",
+    "43 года, мужчина",
+    "24 года, женщина",
+    "70 лет, мужчина",
+    "15 лет, женщина",
+    "89 лет, мужчина",
+    "32 года, женщина",
+    "13 лет, мужчина",
+    "60 лет, женщина",
+    "18 лет, мужчина",
+    "26 лет, женщина",
+    "97 лет, мужчина",
+    "23 года, мужчина",
+    "48 лет, мужчина",
+    "30 лет, мужчина",
+    "100 лет, женщина",
+    "19 лет, мужчина",
+    "42 года, женщина",
+    "34 года, мужчина",
+    "76 лет, мужчина",
+    "27 лет, женщина",
+    "83 года, мужчина",
+    "101 год, мужчина",
+    "20 лет, мужчина",
+    "55 лет, женщина",
+    "33 года, мужчина",
+    "66 лет, женщина",
+    "21 год, мужчина",
+    "44 года, мужчина",
+    "91 год, женщина",
+    "24 года, мужчина",
+    "18 лет, мужчина",
+    "35 лет, мужчина",
+    "62 года, женщина",
+    "77 лет, мужчина",
+    "22 года, женщина",
+    "87 лет, женщина",
+    "100 лет, мужчина",
+    "29 лет, женщина",
+    "53 года, мужчина",
+    "12 лет, мужчина",
+    "40 лет, мужчина",
+    "99 лет, женщина"
+  ],
+  "secrets": [
+    "сидел в тюрьме",
+    "имеет тайный доступ к припасам",
+    "каннибал",
+    "скрывается от полиции",
+    "тайный информатор",
+    "агент спецслужб",
+    "бежал от семьи",
+    "был частью культа",
+    "знает секретную информацию",
+    "скрывает заболевание",
+    "обманул всех",
+    "взломал систему",
+    "совершил ограбление",
+    "сделал поддельные документы",
+    "скрывается от долгов",
+    "причинил кому-то вред",
+    "украл ценную вещь",
+    "получал выгоду от катастрофы",
+    "был свидетелем преступления",
+    "участвовал в эксперименте",
+    "тайно богат",
+    "имеет необычный талант",
+    "владеет несколькими языками",
+    "всё помнит с детства",
+    "может читать мысли",
+    "скрывает прошлое",
+    "любит странности",
+    "не доверяет правительству",
+    "имеет связи",
+    "тайно помогает другим",
+    "боится быть раскрытым",
+    "носит маску",
+    "скрывает свою силу",
+    "всё знает о выживании"
+  ]
+},
+      supplies: [
+  "Медицинский набор инструментов",
+  "Ружьё и патроны",
+  "Консервы на 3 месяца",
+  "Аптечка первой помощи",
+  "Топор и нож",
+  "Радиоприёмник",
+  "Карты местности",
+  "Генератор",
+  "Зарядные устройства",
+  "Настольные игры",
+  "Спальники",
+  "Резервуар для воды",
+  "Горелка",
+  "Семена растений",
+  "Инструменты для ремонта",
+  "Бинокль",
+  "Компас",
+  "Спички и зажигалка",
+  "Фонарик с батарейками",
+  "Пластиковые мешки",
+  "Средства гигиены",
+  "Очки ночного видения",
+  "Сухой паек на неделю",
+  "Перчатки и защитная одежда",
+  "Портативный холодильник",
+  "Складной стул",
+  "Средства от насекомых",
+  "Сигнальное зеркало",
+  "Леска и крючки для рыбалки",
+  "Солонка и специи"
+]
+    };
 
-    async function loadData() {
-      if (bunkerData) return bunkerData;
-      const [disasters, settings, fields, supplies] = await Promise.all([
-        fetch('data/disasters.json').then(r => r.json()),
-        fetch('data/bunker-settings.json').then(r => r.json()),
-        fetch('data/fields.json').then(r => r.json()),
-        fetch('data/supplies.json').then(r => r.json())
-      ]);
-      bunkerData = { disasters, settings, fields, supplies };
-      return bunkerData;
-    }
+    let state = null;
+    const el = id => document.getElementById(id);
 
     function clampNumber(value, min, max, fallback) {
       const num = parseInt(value, 10);
@@ -166,38 +707,20 @@
       return Math.min(max, Math.max(min, num));
     }
 
-    function getConfig() {
-      const players = clampNumber(el('playerCount').value, 4, 30, 10);
-      const rounds = clampNumber(el('roundsCount').value, 3, 10, 6);
-      const survivalPercent = clampNumber(el('survivalPercent').value, 20, 60, 35);
-      const survive = Math.max(1, Math.round(players * survivalPercent / 100));
-      const remove = Math.max(0, players - survive);
-      return { players, rounds, survivalPercent, survive, remove, revealMode: el('revealMode').value };
-    }
-
-    function computeRemovalPlan(remove, rounds) {
-      const plan = new Array(rounds).fill(0);
-      let remaining = remove;
-      for (let i = 0; i < rounds; i++) {
-        const roundsLeft = rounds - i;
-        const step = roundsLeft === 1 ? remaining : Math.ceil(remaining / roundsLeft);
-        plan[i] = Math.max(0, Math.min(step, remaining));
-        remaining -= plan[i];
-      }
-      return plan;
-    }
-
     function updateSetupPreview() {
-      const cfg = getConfig();
-      const plan = computeRemovalPlan(cfg.remove, cfg.rounds);
-      el('playersKpi').textContent = cfg.players;
-      el('surviveKpi').textContent = cfg.survive;
-      el('removeKpi').textContent = cfg.remove;
-      el('roundsKpi').textContent = cfg.rounds;
-      el('removalPreview').innerHTML = plan.map((count, i) => `<span class="tag">Раунд ${i + 1}: -${count}</span>`).join('');
-      el('bunkerHint').textContent = cfg.remove === 0
-        ? 'С таким процентом никто не выбывает. Для классики уменьшите процент выживших.'
-        : `За игру должно выбыть ${cfg.remove} игроков.`;
+      const players = clampNumber(el('playerCount').value, 4, 30, 10);
+      el('playersKpi').textContent = players;
+      el('cardsKpi').textContent = players;
+      el('scenarioKpi').textContent = 1;
+      el('bunkerKpi').textContent = 1;
+      el('bunkerHint').textContent = players < 6 ? 'Для более яркой партии лучше 6+ игроков.' : 'Хороший размер группы для раздачи.';
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    function clearState() {
+      localStorage.removeItem(STORAGE_KEY);
     }
 
     function randomFrom(arr) {
@@ -232,7 +755,6 @@
 
       return Array.from({ length: total }, (_, i) => ({
         id: i + 1,
-        alive: true,
         profession: pick('professions'),
         health: pick('health'),
         phobia: pick('phobias'),
@@ -240,17 +762,15 @@
         inventory: pick('inventory'),
         quality: pick('qualities'),
         biography: pick('biography'),
-        secret: pick('secrets'),
-        notes: []
+        secret: pick('secrets')
       }));
     }
 
-    async function startBunker() {
-      const cfg = getConfig();
-      const data = await loadData();
-      const disaster = randomFrom(data.disasters);
-      const setting = randomFrom(data.settings);
-      const supplies = randomUniqueMultiple(data.supplies, 2, 4);
+    function startBunker() {
+      const players = clampNumber(el('playerCount').value, 4, 30, 10);
+      const disaster = randomFrom(bunkerData.disasters);
+      const setting = randomFrom(bunkerData.settings);
+      const supplies = randomUniqueMultiple(bunkerData.supplies, 2, 4);
       const area = randomFrom([
         '56 м², один уровень, тесно, но безопасно',
         '92 м², один уровень, комфортно для средней группы',
@@ -258,51 +778,24 @@
         '168 м², два уровня, много отсеков и складов',
         '220 м², модульный бункер с технической зоной'
       ]);
+      const specialRule = randomFrom([
+        'Запас воздуха нестабилен: группа должна подумать, кто реально полезен.',
+        'Одна секция бункера запечатана, места меньше, чем кажется.',
+        'В первые недели нельзя выходить наружу вообще.',
+        'Ресурсы ограничены, но внутри есть шанс наладить автономную жизнь.',
+        'Снаружи есть слабый радиосигнал: возможно, вы не единственные выжившие.'
+      ]);
 
       state = {
-        round: 1,
         revealIndex: 0,
-        showAllCards: cfg.revealMode === 'moderator',
-        config: cfg,
-        removalPlan: computeRemovalPlan(cfg.remove, cfg.rounds),
-        scenario: {
-          disaster,
-          setting,
-          area,
-          supplies,
-          specialRule: randomFrom([
-            'Воздух снаружи опасен ещё минимум 18 месяцев.',
-            'Первые 30 дней выходить наружу нельзя ни при каких условиях.',
-            'В бункере нестабильная фильтрация воды.',
-            'Энергии хватит только при строгой экономии.',
-            'Снаружи иногда слышны сигналы других выживших.'
-          ])
-        },
-        players: generateCharacters(data.fields, cfg.players),
-        log: [{ time: new Date().toLocaleString('ru-RU'), message: 'Игра «Бункер» сгенерирована.' }]
+        showAllCards: false,
+        config: { players, revealMode: el('revealMode').value },
+        scenario: { disaster, setting, supplies, area, specialRule },
+        players: generateCharacters(bunkerData.fields, players)
       };
       saveState();
-
-      if (cfg.revealMode === 'private') {
-        showReveal();
-      } else {
-        showDashboard();
-        makeLog('Карточки сразу открыты ведущему.');
-      }
-    }
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function clearState() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-
-    function makeLog(message) {
-      state.log.unshift({ time: new Date().toLocaleString('ru-RU'), message });
-      saveState();
-      renderDashboard();
+      if (state.config.revealMode === 'private') showReveal();
+      else showDashboard();
     }
 
     function showReveal() {
@@ -316,7 +809,6 @@
       const player = state.players[state.revealIndex];
       if (!player) {
         showDashboard();
-        makeLog('Все карточки розданы. Ведущий перешёл в режим управления игрой.');
         return;
       }
       el('revealWaiting').classList.add('active');
@@ -365,25 +857,10 @@
       renderDashboard();
     }
 
-    function getRoundPlanCount() {
-      return state.removalPlan[Math.min(state.round - 1, state.removalPlan.length - 1)] || 0;
-    }
-
     function renderDashboard() {
       if (!state) return;
-      el('roundLabel').textContent = state.round;
-      el('aliveLabel').textContent = state.players.filter(p => p.alive).length;
-      el('roundPlanLabel').textContent = getRoundPlanCount();
-      el('goalLabel').textContent = state.config.survive;
-      el('survivalState').textContent = state.players.filter(p => p.alive).length <= state.config.survive ? 'Финал: достигнут лимит выживших' : 'Игра продолжается';
-      renderScenario();
-      renderPlayers();
-      renderLog();
-      saveState();
-    }
-
-    function renderScenario() {
       const s = state.scenario;
+      el('showAllBtn').textContent = state.showAllCards ? 'Скрыть карточки' : 'Показать карточки';
       el('scenarioGrid').innerHTML = `
         <div class="kpi"><div class="label">Катастрофа</div><div class="value" style="font-size:24px">${s.disaster.type}</div><div class="hint">${s.disaster.description}</div></div>
         <div class="kpi"><div class="label">Бункер</div><div class="value" style="font-size:24px">${s.area}</div><div class="hint">Срок: ${s.setting.duration}</div></div>
@@ -391,63 +868,25 @@
         <div class="kpi"><div class="label">Припасы</div><div>${s.supplies.join(', ')}</div><div class="hint">Стартовый запас</div></div>
         <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Особое правило</div><div>${s.specialRule}</div></div>
       `;
-    }
-
-    function renderPlayers() {
-      const showAll = state.showAllCards;
       el('playersGrid').innerHTML = state.players.map(player => `
-        <article class="player-card ${player.alive ? '' : 'dead'}">
+        <article class="player-card ${state.showAllCards ? '' : 'dead'}">
           <div class="title-row">
             <div>
               <h4>Игрок ${player.id}</h4>
-              <div class="muted">${showAll ? player.profession : 'Карточка скрыта'}</div>
+              <div class="muted">${state.showAllCards ? player.profession : 'Карточка скрыта'}</div>
             </div>
-            <span class="status-badge ${player.alive ? 'good' : 'bad'}">${player.alive ? 'В игре' : 'Выбыл'}</span>
+            <span class="status-badge ${state.showAllCards ? 'good' : 'warn'}">${state.showAllCards ? 'Открыто' : 'Секретно'}</span>
           </div>
           <div class="tag-row">
-            <span class="tag">Навык: ${showAll ? player.skill : 'скрыт'}</span>
-            <span class="tag">Качество: ${showAll ? player.quality : 'скрыто'}</span>
+            <span class="tag">Навык: ${state.showAllCards ? player.skill : 'скрыт'}</span>
+            <span class="tag">Качество: ${state.showAllCards ? player.quality : 'скрыто'}</span>
           </div>
           <div class="button-row" style="margin-top:12px">
-            <button class="soft-btn" onclick="togglePlayer(${player.id})">${player.alive ? 'Исключить' : 'Вернуть'}</button>
-            <button class="ghost-btn" onclick="openPlayerModal(${player.id})">Подробнее</button>
+            <button class="soft-btn" onclick="openPlayerModal(${player.id})">Подробнее</button>
           </div>
         </article>
       `).join('');
-    }
-
-    function renderLog() {
-      el('gameLog').innerHTML = state.log.map(entry => `<div class="log-entry"><div class="time">${entry.time}</div><div>${entry.message}</div></div>`).join('');
-    }
-
-    function togglePlayer(id) {
-      const player = state.players.find(p => p.id === id);
-      if (!player) return;
-      player.alive = !player.alive;
-      player.notes.unshift(player.alive ? 'Возвращён в спор.' : `Исключён в раунде ${state.round}.`);
-      makeLog(`Игрок ${player.id} ${player.alive ? 'возвращён в игру' : 'исключён из бункера'}.`);
-      renderDashboard();
-    }
-
-    function nextRound() {
-      if (state.round < state.config.rounds) {
-        state.round += 1;
-        makeLog(`Начался раунд ${state.round}. План выбывания: ${getRoundPlanCount()} игроков.`);
-      } else {
-        makeLog('Основные раунды завершены. Осталось определить финальный состав выживших.');
-      }
-      renderDashboard();
-    }
-
-    function randomSpeaker() {
-      const alive = state.players.filter(p => p.alive);
-      if (!alive.length) {
-        el('speakerResult').textContent = 'Живых игроков не осталось.';
-        return;
-      }
-      const speaker = alive[Math.floor(Math.random() * alive.length)];
-      el('speakerResult').textContent = `Следующим выступает игрок ${speaker.id}${state.showAllCards ? ` — ${speaker.profession}` : ''}.`;
-      makeLog(`Случайным образом выбран выступающий: игрок ${speaker.id}.`);
+      saveState();
     }
 
     function openPlayerModal(id) {
@@ -463,7 +902,6 @@
         <div class="kpi"><div class="label">Качество</div><div>${p.quality}</div></div>
         <div class="kpi"><div class="label">Биография</div><div>${p.biography}</div></div>
         <div class="kpi"><div class="label">Секрет</div><div>${p.secret}</div></div>
-        <div class="kpi" style="grid-column: 1 / -1;"><div class="label">Заметки ведущего</div><div>${p.notes.length ? `<ul>${p.notes.map(n => `<li>${n}</li>`).join('')}</ul>` : 'Пока без заметок.'}</div></div>
       `;
       el('playerModal').classList.add('active');
     }
@@ -475,7 +913,7 @@
     function restoreSession() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
-        alert('Сохранённая сессия не найдена.');
+        alert('Сохранённая раздача не найдена.');
         return;
       }
       state = JSON.parse(raw);
@@ -484,26 +922,23 @@
     }
 
     function hardReset() {
-      if (!confirm('Полностью сбросить текущую игру?')) return;
+      if (!confirm('Полностью сбросить текущую раздачу?')) return;
       state = null;
       clearState();
       location.reload();
     }
 
-    ['playerCount', 'roundsCount', 'survivalPercent', 'revealMode'].forEach(id => {
+    ['playerCount', 'revealMode'].forEach(id => {
       el(id).addEventListener('input', updateSetupPreview);
       el(id).addEventListener('change', updateSetupPreview);
     });
     el('startBunkerBtn').addEventListener('click', startBunker);
     el('showCharacterBtn').addEventListener('click', showCharacter);
     el('hideCharacterBtn').addEventListener('click', hideCharacterAndNext);
-    el('nextRoundBtn').addEventListener('click', nextRound);
     el('showAllBtn').addEventListener('click', () => {
       state.showAllCards = !state.showAllCards;
-      makeLog(state.showAllCards ? 'Ведущий открыл все карточки.' : 'Ведущий снова скрыл карточки на общем экране.');
       renderDashboard();
     });
-    el('randomSpeakerBtn').addEventListener('click', randomSpeaker);
     el('closeModalBtn').addEventListener('click', closeModal);
     el('playerModal').addEventListener('click', (e) => { if (e.target === el('playerModal')) closeModal(); });
     el('restoreBtn').addEventListener('click', restoreSession);
