@@ -1,32 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Мафия / Бункер</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="home-bg">
-  <main class="app-shell app-shell-home centered-shell">
-    <section class="choice-screen">
-      <div class="choice-logo">МАФИЯ / БУНКЕР</div>
-      <div class="choice-subtitle">выберите игру</div>
-      <div class="choice-actions stacked-actions">
-        <a class="game-choice mafia-choice" href="mafia.html">
-          <span class="choice-kicker">Ночной город</span>
-          <strong>Мафия</strong>
-          <span class="choice-note">раздача ролей</span>
-        </a>
-        <a class="game-choice bunker-choice" href="bunker.html">
-          <span class="choice-kicker">Последнее убежище</span>
-          <strong>Бункер</strong>
-          <span class="choice-note">раздача карточек</span>
-        </a>
-      </div>
-    </section>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#090a0d" />
+    <meta
+      name="description"
+      content="Две атмосферные социальные игры для компании: Мафия и Бункер."
+    />
+    <link rel="icon" href="/icons/app-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/app-icon-192.png" />
+    <title>Ночной город / Последний бункер</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
